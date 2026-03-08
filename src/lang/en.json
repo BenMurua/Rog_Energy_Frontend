@@ -1,0 +1,102 @@
+{
+  "header": {
+    "logo": "⚡ BESS Flux",
+    "pages":{
+      "prediction": "Prediction",
+      "historic": "Historic",
+      "statistics": "Statistics",
+      "about": "About"
+    },
+    "graficas": "Charts",
+    "contacto": "Contact",
+    "theme": {
+      "light": "🌙",
+      "dark": "☀️"
+    },
+    "language": "Language"
+  },
+  "prediction": {
+    "welcome": "Welcome to EnergyPredict",
+    "description": "Electricity price prediction clearly and sustainably.",
+    "select_day": "Select a day to view OMIE energy prices:",
+    "select_charge_discharge_duration": "Select charge/discharge duration (hours):",
+    "hour": "hour",
+    "loading": "Loading data...",
+    "predictedPrice": "Predicted Price",
+    "realPrice": "Real Price",
+    "chargeLabel": "Charge",
+    "dischargeLabel": "Discharge",
+    "optimalChargeLabel": "Optimal Charge",
+    "optimalDischargeLabel": "Optimal Discharge",
+    "optimal_charge_timeframe": "Optimal charge periods:",
+    "optimal_discharge_timeframe": "Optimal discharge periods:",
+    "not_available": "N/A",
+    "for_date": "Prediction for {{date}}"
+  },
+  "home": {
+    "title": "Maximize the Profitability of your",
+    "omie_highlight": "BESS Asset",
+    "subtitle": "Advanced AI-driven energy arbitrage tool for Battery Energy Storage Systems in the Spanish market.",
+    "cta_explore": "Start Predicting",
+    "bess_title": "The Intelligence Engine for your Storage",
+    "bess_description": "Our AI learns from the interconnection between weather data and gas fundamentals to optimize your BESS operations and maximize ROI.",
+    "section_title_training": "Robust Data Infrastructure",
+    "section_title_benchmarking": "Performance Metrics",
+    "data_input_title": "Multi-Source Intelligence",
+    "data_input_description": "High-resolution integration of meteorological forecasts from 10 strategic nodes in Spain, combined with real-time Gas, CO2, and Iberian market fundamentals.",
+    "model_submodels_title": "Sequential Inference Engine",
+    "model_submodels_description": "A cascaded architecture of specialized neural networks where demand and generation forecasts flow into a final, high-fidelity price optimization layer.",
+    "optimization_title": "BESS Operation Optimization",
+    "optimization_description": "Advanced optimization algorithms that determine the most profitable charge and discharge schedules based on predicted market conditions and system constraints.",
+    "comparison_title": "Reliability Benchmarking",
+    "comparison_description": "Continuous validation against market outcomes and theoretical optima to ensure maximum predictive accuracy and risk transparency.",
+    "max_theoretical": "Theoretical Optimum",
+    "model_predicted": "AI Model Efficiency"
+  },
+
+  
+  "footer": {
+    "copyright": "© 2025 BESS Flux. All rights reserved.",
+    "poweredby": "Powered by BESS Flux",
+    "contact": "Contact: bntmurua@gmail.com"
+  },
+  "historic": {
+    "welcome": "Welcome to the Historic Data Viewer",
+    "description": "Explore past electricity prices and trends.",
+    "select_day": "Select a day to view historic OMIE prices:",
+    "select_charge_discharge_duration": "Select charge/discharge duration (hours):",
+    "hour": "hour",
+    "loading": "Loading historic data...",
+    "predictedPrice": "Predicted Price",
+    "realPrice": "Real Price",
+    "chargeLabel": "Charge",
+    "dischargeLabel": "Discharge"
+  },
+  "statisticsChart": {
+  },
+  "statistics": {
+    "title": "Models Statistics",
+    "1hour": "1 hour system",
+    "2hour": "2 hour system",
+    "4hour": "4 hour system",
+    "idealPriceSpread": "Ideal Spread",
+    "predictionPriceSpread": "Prediction Spread",
+    "processed1": "Processed: First text",
+    "processed2": "Processed: Second text",
+    "processed3": "Processed: Third text",
+    "startingDate": "Starting Date",
+    "finalDate": "Final Date",
+    "return": "Return",
+    "predictionModelReturn": "Prediction Model Return",
+    "delta1h": "Delta 1h",
+    "delta2h": "Delta 2h",
+    "delta4h": "Delta 4h",
+    "realPrice": "Real Price",
+    "days": "days",
+    "capturePercentage": "Capture Percentage"
+  },
+    "SelectSystemDuration": {
+    "label": "Select BESS System Duration (hours):"
+  }
+}
+

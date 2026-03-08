@@ -1,0 +1,122 @@
+.prediction-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.prediction-sidebar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  margin-right: 0px;
+  margin-left: 80px;
+  padding-left: 20px;
+  position: relative;
+  flex: 0 0 auto;
+  width: 400px;
+}
+
+.prediction-sidebar::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.prediction-controls {
+  padding: 1.5rem;
+  margin-bottom: 15px;
+  text-align: left;
+  position: relative;
+}
+
+.prediction-date-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  margin: 20px 0;
+  text-shadow: none;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.optimal-charge-text,
+.optimal-discharge-text {
+  font-weight: 500;
+  color: #333333;
+  font-size: 1.1rem;
+  text-shadow: none;
+  margin: 15px 0 0 0;
+}
+
+.optimal-charge-text {
+  margin: 20px 0 10px 0;
+}
+
+.best-charge-box {
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 212, 170, 0.1);
+}
+
+.prediction-chart {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .prediction-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .prediction-sidebar {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.75rem;
+    width: auto;
+    order: 1;
+  }
+
+  .prediction-chart {
+    order: 2;
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .prediction-container {
+    padding: 5px;
+  }
+
+  .prediction-sidebar {
+    padding: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .prediction-date-text {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+
+  .optimal-charge-text,
+  .optimal-discharge-text {
+    font-size: 0.85rem;
+  }
+
+  .prediction-controls {
+    padding: 0.5rem;
+    margin-bottom: 10px;
+  }
+}

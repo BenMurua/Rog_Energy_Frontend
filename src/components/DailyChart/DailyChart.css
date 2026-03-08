@@ -1,0 +1,71 @@
+/* Contenedor principal */
+.daily-chart-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Contenedor del gráfico con altura responsiva */
+.chart-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chart-wrapper .recharts-responsive-container {
+  min-height: 200px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .daily-chart-container {
+    margin: 0.5rem auto;
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .chart-wrapper .recharts-responsive-container {
+    min-height: 180px;
+  }
+}
+
+/* Título del gráfico */
+.daily-chart-container h2 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Desplegable de selección de día */
+.daily-chart-container select {
+  display: block;
+  margin: 0 auto 2rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--secondary);
+  color: var(--button-text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.daily-chart-container select:hover,
+.daily-chart-container select:focus {
+  background-color: var(--secondary-hover);
+  outline: none;
+}
+
+/* Gráfico responsive ya está controlado por Recharts */

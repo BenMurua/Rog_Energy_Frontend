@@ -1,0 +1,107 @@
+{
+  "header": {
+    "logo": "⚡ BESS Flux",
+    "pages": {
+      "prediction": "Predicción",
+      "historic": "Histórico",
+      "statistics": "Estadísticas",
+      "about": "Acerca de"
+    },
+    "graficas": "Gráficas",
+    "contacto": "Contacto",
+    "theme": {
+      "light": "🌙",
+      "dark": "☀️"
+    },
+    "language": "Idioma"
+  },
+  "prediction": {
+    "welcome": "Bienvenido a EnergyPredict",
+    "description": "Predicción del precio de la electricidad de forma clara y sostenible.",
+    "select_day": "Selecciona un día para ver los precios de OMIE:",
+    "select_charge_discharge_duration": "Selecciona la duración de carga/descarga (horas):",
+    "hour": "Hora",
+    "loading": "Cargando datos...",
+    "predictedPrice": "Precio Predicho",
+    "realPrice": "Precio Real",
+    "chargeLabel": "Carga",
+    "dischargeLabel": "Descarga",
+    "optimalChargeLabel": "Carga Óptima",
+    "optimalDischargeLabel": "Descarga Óptima",
+    "optimal_charge_timeframe": "Períodos de carga óptimos:",
+    "optimal_discharge_timeframe": "Períodos de descarga óptimos:",
+    "not_available": "N/D",
+    "for_date": "Predicción para {{date}}"
+  },
+  "home": {
+    "title": "Maximice la Rentabilidad de su",
+    "omie_highlight": "Activo BESS",
+    "subtitle": "Herramienta avanzada de arbitraje energético impulsada por IA para Sistemas de Almacenamiento de Energía en Baterías en el mercado español.",
+    "cta_explore": "Comenzar a Predecir",
+    "bess_title": "El Motor de Inteligencia para su Almacenamiento",
+    "bess_description": "Nuestra IA aprende de la interconexión entre datos meteorológicos y fundamentos de gas para optimizar sus operaciones BESS y maximizar el ROI.",
+    "section_title_training": "Infraestructura de Datos Robusta",
+    "section_title_benchmarking": "Métricas de Rendimiento",
+    "data_input_title": "Inteligencia Multisource",
+    "data_input_description": "Integración de alta resolución de pronósticos meteorológicos de 10 nodos estratégicos en España, combinada con fundamentos en tiempo real de Gas, CO2 y mercado ibérico.",
+    "model_submodels_title": "Motor de Inferencia Secuencial",
+    "model_submodels_description": "Una arquitectura en cascada de redes neuronales especializadas donde las previsiones de demanda y generación fluyen hacia una capa final de optimización de precios de alta fidelidad.",
+    "comparison_title": "Evaluación de Fiabilidad",
+    "comparison_description": "Validación continua contra resultados de mercado y óptimos teóricos para asegurar máxima precisión predictiva y transparencia de riesgo.",
+    "max_theoretical": "Óptimo Teórico",
+    "model_predicted": "Eficiencia del Modelo IA"
+  },
+  "footer": {
+    "copyright": "© 2025 BESS Flux. Todos los derechos reservados.",
+    "poweredby": "Desarrollado por BESS Flux",
+    "contact": "Contacto: bntmurua@gmail.com"
+  },
+  "historic": {
+    "welcome": "Bienvenido al visor de datos históricos",
+    "description": "Explora precios y tendencias eléctricas pasadas.",
+    "select_day": "Selecciona un día para ver precios históricos de OMIE:",
+    "select_charge_discharge_duration": "Selecciona la duración de carga/descarga (horas):",
+    "hour": "Hora",
+    "loading": "Cargando datos históricos...",
+    "predictedPrice": "Precio Predicho",
+    "realPrice": "Precio Real",
+    "chargeLabel": "Carga",
+    "dischargeLabel": "Descarga",
+    "optimalChargeLabel": "Carga Óptima",
+    "optimalDischargeLabel": "Descarga Óptima"
+  },
+  "statistics": {
+    "title": "Gráfico de Estadísticas",
+    "variable": "Variable",
+    "delta1h": "Delta Precio 1H Horario",
+    "delta2h": "Delta Precio 2H Horario",
+    "charge1h": "Carga 1H Horaria",
+    "discharge1h": "Descarga 1H Horaria",
+    "charge2h": "Carga 2H Horaria",
+    "discharge2h": "Descarga 2H Horaria",
+    "startDate": "Fecha de Inicio",
+    "endDate": "Fecha de Fin",
+    "text1": "Texto uno",
+    "text2": "Texto dos",
+    "text3": "Texto tres",
+    "processed1": "Procesado: Primer texto",
+    "processed2": "Procesado: Segundo texto",
+    "processed3": "Procesado: Tercer texto",
+    "1hour": "1 hora sistema",
+    "2hour": "2 horas sistema",
+    "4hour": "4 horas sistema",
+    "idealPriceSpread": "Diferencial Ideal",
+    "predictionPriceSpread": "Diferencial de Predicción",
+    "startingDate": "Fecha de Inicio",
+    "finalDate": "Fecha Final",
+    "return": "Retorno",
+    "predictionModelReturn": "Retorno del Modelo de Predicción",
+    "delta4h": "Delta 4h",
+    "realPrice": "Precio Real",
+    "days": "días",
+    "capturePercentage": "Porcentaje de Captación"
+  },
+  "SelectSystemDuration": {
+    "label": "Seleccionar Duración del Sistema BESS (horas):"
+  }
+}

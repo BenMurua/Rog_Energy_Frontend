@@ -1,0 +1,6 @@
+/* Minimal App styles - layout handled by Layout component */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

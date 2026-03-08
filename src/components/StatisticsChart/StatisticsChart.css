@@ -1,0 +1,28 @@
+/* StatisticsChart.css */
+
+.statistics-chart-container {
+  /* Estilos adicionales si es necesario */
+}
+
+/* Contenedor del gráfico con altura responsiva */
+.chart-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chart-wrapper .recharts-responsive-container {
+  min-height: 180px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .chart-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .chart-wrapper .recharts-responsive-container {
+    min-height: 180px;
+  }
+}

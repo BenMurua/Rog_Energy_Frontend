@@ -1,0 +1,71 @@
+/* Styles for DateSelector component */
+.date-selector {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-width: 420px;
+}
+
+.date-selector .row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.date-selector .label {
+	width: 110px;
+	font-weight: 600;
+}
+
+.date-selector input[type="date"],
+.date-selector input[type="datetime-local"] {
+	padding: 6px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.date-selector .checkbox-row {
+	margin-left: 2px;
+}
+
+@media (max-width: 768px) {
+	.date-selector {
+		max-width: 100%;
+		gap: 6px;
+	}
+
+	.date-selector .row {
+		flex-direction: row;
+		align-items: center;
+		gap: 5px;
+	}
+
+	.date-selector .label {
+		width: 80px;
+		font-size: 0.85rem;
+		margin-bottom: 0;
+	}
+
+	.date-selector input[type="date"],
+	.date-selector input[type="datetime-local"] {
+		padding: 4px 6px;
+		font-size: 0.85rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.date-selector {
+		gap: 4px;
+	}
+
+	.date-selector .label {
+		width: 70px;
+		font-size: 0.8rem;
+	}
+
+	.date-selector input[type="date"],
+	.date-selector input[type="datetime-local"] {
+		padding: 3px 5px;
+		font-size: 0.8rem;
+	}
+}

@@ -1,0 +1,376 @@
+/* Home.css - Modern Dark Mode Design for Energy Arbitrage Tool */
+
+.home-container {
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero Section - Full screen height */
+.hero-section {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.highlight-omie {
+  color: var(--highlight);
+  text-shadow: 0 0 20px var(--shadow);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text);
+  opacity: 0.7;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--secondary), var(--highlight));
+  color: var(--button-text);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+}
+
+/* BESS Focus Section */
+.bess-focus-section {
+  padding: 4rem 0;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+}
+
+.bess-focus-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  margin: 0 2rem;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+}
+
+.bess-focus-box::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.bess-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.bess-description {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Training Data Section */
+.training-data-section {
+  padding: 2rem 0;
+  background: transparent;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text);
+}
+
+.training-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  max-width: 1900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.data-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.data-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+}
+
+.data-item:hover::before {
+  opacity: 0.5;
+}
+
+.data-item::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  border-radius: 26px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.data-item img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 1rem 0;
+}
+
+.data-item h3 {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.data-item p {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.data-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.data-tags span {
+  background: rgba(0, 102, 255, 0.1);
+  border: 1px solid rgba(0, 102, 255, 0.3);
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+/* Benchmarking Section */
+.benchmarking-section {
+  padding: 2rem 0;
+  background: transparent;
+}
+
+.benchmarking-visual {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.benchmarking-visual::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  border-radius: 26px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.benchmark-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20%,
+    rgba(0, 0, 0, 0.2) 20%,
+    rgba(0, 0, 0, 0.2) 20.2%
+  );
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+[data-theme="dark"] .benchmark-bars {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.2) 20.2%
+  );
+}
+
+.benchmark-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.benchmark-bar label {
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+}
+
+[data-theme="dark"] .benchmark-bar label {
+  color: #ffffff;
+}
+
+.bar {
+  height: 40px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  background: var(--card);
+  border: 2px solid var(--border);
+  flex: 1;
+}
+
+.bar.full {
+  background: var(--primary);
+}
+
+.bar.model {
+  background: var(--accent);
+}
+
+.bar span {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.x-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .training-data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bess-focus-box {
+    padding: 1.5rem;
+  }
+
+  .data-item {
+    padding: 1.5rem;
+  }
+
+  .benchmarking-visual {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .data-item img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 90vh;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+

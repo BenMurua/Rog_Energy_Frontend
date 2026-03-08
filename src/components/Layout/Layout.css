@@ -1,0 +1,28 @@
+/* Layout flexbox structure */
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 0;
+  }
+}

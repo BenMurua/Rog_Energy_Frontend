@@ -1,0 +1,107 @@
+{
+  "header": {
+    "logo": "⚡ BESS Flux",
+    "pages": {
+      "prediction": "Iragarpena",
+      "historic": "Historikoa",
+      "statistics": "Estatistikak",
+      "about": "Honi buruz"
+    },
+    "graficas": "Grafikoak",
+    "contacto": "Kontaktua",
+    "theme": {
+      "light": "🌙",
+      "dark": "☀️"
+    },
+    "language": "Hizkuntza"
+  },
+  "prediction": {
+    "welcome": "Ongi etorri EnergyPredict-era",
+    "description": "Argindarraren prezioaren iragarpena modu argi eta iraunkorrean.",
+    "select_day": "Aukeratu eguna OMIE prezioak ikusteko:",
+    "select_charge_discharge_duration": "Aukeratu karga/deskarga iraupena (orduak):",
+    "hour": "Ordua",
+    "loading": "Datuak kargatzen...",
+    "predictedPrice": "Iragarritako Prezioa",
+    "realPrice": "Benetako Prezioa",
+    "chargeLabel": "Karga",
+    "dischargeLabel": "Deskarga",
+    "optimalChargeLabel": "Karga Optimoa",
+    "optimalDischargeLabel": "Deskarga Optimoa",
+    "optimal_charge_timeframe": "Karga periodo optimoak:",
+    "optimal_discharge_timeframe": "Deskarga periodo optimoak:",
+    "not_available": "E/E",
+    "for_date": "Iragarpena {{date}}-(e)rako"
+  },
+  "home": {
+    "title": "Zure Errentagarritasuna Maximizatu",
+    "omie_highlight": "BESS Aktiboa",
+    "subtitle": "Bateriako Energia Biltegiratze Sistemetarako IA bidezko energia arbitraje tresna aurreratua merkatu espainiarrean.",
+    "cta_explore": "Iragarpenak Hasi",
+    "bess_title": "Zure Biltegiratzearen Adimen Motorra",
+    "bess_description": "Gure IAk datu meteorologikoen eta gasaren oinarrien arteko elkarreraginean ikasten du zure BESS eragiketak optimizatzeko eta ROI maximizatzeko.",
+    "section_title_training": "Datu Azpiegitura Sendua",
+    "section_title_benchmarking": "Errendimendu Metrikak",
+    "data_input_title": "Iturri Anitzeko Adimena",
+    "data_input_description": "Espainiako 10 nodo estrategikoko eguraldi iragarpenen alta bereizmeneko integrazioa, Gas, CO2 eta merkatu iberikoaren fundamentuekin denbora errealean konbinatuta.",
+    "model_submodels_title": "Inferentzia Sekuentzialaren Motorra",
+    "model_submodels_description": "Eskakera eta ekoizpen iragarpenak azken prezio optimizazio geruza fidel handiko batera isurtzen diren sare neuronal espezializatuen arkitektura kaskadatu bat.",
+    "comparison_title": "Fidagarritasunaren Ebaluazioa",
+    "comparison_description": "Merkatuaren emaitzen eta optimo teorikoen aurkako balidazio jarraitua, gehienezko zehaztasun iragarlea eta arriskuaren gardentasuna ziurtatzeko.",
+    "max_theoretical": "Optimo Teorikoa",
+    "model_predicted": "IA Ereduaren Efizientzia"
+  },
+  "footer": {
+    "copyright": "© 2025 BESS Flux. Eskubide guztiak erreserbatuta.",
+    "poweredby": "BESS Flux-ek egina",
+    "contact": "Kontaktua: bntmurua@gmail.com"
+  },
+  "historic": {
+    "welcome": "Ongi etorri datu historikoen bistaratzailean",
+    "description": "Aztertu iraganeko argindar prezioak eta joerak.",
+    "select_day": "Aukeratu eguna OMIE prezio historikoak ikusteko:",
+    "select_charge_discharge_duration": "Aukeratu karga/deskarga iraupena (orduak):",
+    "hour": "Ordua",
+    "loading": "Datu historikoak kargatzen...",
+    "predictedPrice": "Iragarritako Prezioa",
+    "realPrice": "Benetako Prezioa",
+    "chargeLabel": "Karga",
+    "dischargeLabel": "Deskarga",
+    "optimalChargeLabel": "Karga Optimoa",
+    "optimalDischargeLabel": "Deskarga Optimoa"
+  },
+  "statistics": {
+    "title": "Estatistiken Grafikoa",
+    "variable": "Aldagaia",
+    "delta1h": "Delta Prezioa 1H Orduka",
+    "delta2h": "Delta Prezioa 2H Orduka",
+    "charge1h": "Karga 1H Orduka",
+    "discharge1h": "Deskarga 1H Orduka",
+    "charge2h": "Karga 2H Orduka",
+    "discharge2h": "Deskarga 2H Orduka",
+    "startDate": "Hasiera Data",
+    "endDate": "Amaiera Data",
+    "text1": "Testu bat",
+    "text2": "Testu bi",
+    "text3": "Testu hiru",
+    "processed1": "Prozesatua: Lehen testua",
+    "processed2": "Prozesatua: Bigarren testua",
+    "processed3": "Prozesatua: Hirugarren testua",
+    "1hour": "1 ordu sistema",
+    "2hour": "2 ordu sistema",
+    "4hour": "4 ordu sistema",
+    "idealPriceSpread": "Diferentzial Ideala",
+    "predictionPriceSpread": "Diferentzialaren Irizpidea",
+    "startingDate": "Hasiera Data",
+    "finalDate": "Amaiera Data",
+    "return": "Itzulera",
+    "predictionModelReturn": "Iragarpen Modeloaren Itzulera",
+    "delta4h": "Delta 4h",
+    "realPrice": "Benetako Prezioa",
+    "days": "egun",
+    "capturePercentage": "Kaptazio Portzentajea"
+  },
+  "SelectSystemDuration": {
+    "label": "BESS Sistemaren Iraupena Aukeratu (orduak):"
+  }
+}

@@ -1,0 +1,20 @@
+# docker compose.yaml
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        # Aquí definimos la URL de la API para el entorno local de Docker
+        # Como usamos el proxy de Nginx, la apuntamos al path relativo /api/v1
+        - VITE_API_BASE_URL=/api/v1
+    container_name: energy-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - backend_network
+    restart: always
+
+networks:
+  backend_network:
+    external: true
+    name: energy-price-prediction-backend_default

@@ -1,0 +1,152 @@
+/* StatisticsControl.css */
+
+.statistics-control-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  margin: 2rem;
+  max-width: 800px;
+  text-align: left;
+  position: relative;
+}
+
+.statistics-control-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.date-selector-row {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.date-selector-row label {
+  margin-right: 1rem;
+  margin-top: -0.5rem;
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.text-lines {
+  flex-direction: column;
+  margin: 3rem 0;
+}
+
+.text-lines p {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+  display: inline;
+}
+
+.text-line {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.text-line input {
+  width: 12px;
+  height: 20px;
+  transform: scale(2);
+  margin-right: 1rem;
+}
+
+.flexbox {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .statistics-control-container {
+    padding: 0.75rem;
+    margin: 0.5rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: none;
+  }
+
+  .date-selector-row {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0.5rem 0;
+  }
+
+  .date-selector-row label {
+    margin-right: 0;
+    margin-bottom: 0.3rem;
+    min-width: auto;
+    font-size: 0.9rem;
+  }
+
+  .text-lines {
+    margin: 1rem 0;
+  }
+
+  .text-lines p {
+    font-size: 1rem;
+  }
+
+  .text-line {
+    margin: 0.75rem 0;
+  }
+
+  .text-line input {
+    transform: scale(1.5);
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics-control-container {
+    padding: 0.5rem;
+    margin: 0.25rem;
+    border-radius: 12px;
+  }
+
+  .text-lines {
+    margin: 0.5rem 0;
+  }
+
+  .text-lines p {
+    font-size: 0.85rem;
+  }
+
+  .text-line {
+    margin: 0.5rem 0;
+  }
+
+  .text-line input {
+    transform: scale(1.3);
+    margin-right: 0.75rem;
+  }
+
+  .label {
+    font-size: 0.85rem;
+    margin-left: 0.3rem;
+  }
+
+  .date-selector-row label {
+    font-size: 0.8rem;
+  }
+}
