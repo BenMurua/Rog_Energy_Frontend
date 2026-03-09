@@ -53,6 +53,9 @@ export default function Header() {
         <NavLink to={RoutesValues.statistics}>
           {t("header.pages.statistics")}
         </NavLink>
+        <NavLink to={RoutesValues.otherData}>
+          {t("header.pages.otherData")}
+        </NavLink>
       </nav>
 
       <select

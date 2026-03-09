@@ -5,7 +5,8 @@
       "prediction": "Iragarpena",
       "historic": "Historikoa",
       "statistics": "Estatistikak",
-      "about": "Honi buruz"
+      "about": "Honi buruz",
+      "otherData": "Beste datuak"
     },
     "graficas": "Grafikoak",
     "contacto": "Kontaktua",
@@ -103,5 +104,9 @@
   },
   "SelectSystemDuration": {
     "label": "BESS Sistemaren Iraupena Aukeratu (orduak):"
+  },
+  "apache": {
+    "clima": "Apache Eguraldia",
+    "consumption": "Aurreikusitako kontsumoa"
   }
 }

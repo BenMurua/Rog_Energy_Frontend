@@ -1,0 +1,48 @@
+.apache-graph-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  text-align: left;
+}
+
+.apache-graph-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.date-selectors {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.date-selectors label {
+  font-weight: bold;
+}
+
+.variables-list {
+  margin-bottom: 2rem;
+}
+
+.variable-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.unit {
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.graph-placeholder {
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}

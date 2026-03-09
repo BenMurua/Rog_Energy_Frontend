@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "echarts": "^6.0.0",
+    "echarts-for-react": "^3.0.6",
     "framer-motion": "^12.23.26",
     "i18next": "^25.3.4",
     "react": "^19.2.3",

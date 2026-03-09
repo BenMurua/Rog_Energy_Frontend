@@ -1,0 +1,49 @@
+[
+  {
+    "tituloKey": "apache.consumption",
+    "variables": [
+      {
+        "nombre": "Esios predicted consumption",
+        "unidad": "MW",
+        "tabla": "esios_data_spain",
+        "variable": "prevision_demanda_diaria"
+      },
+      {
+        "nombre": "Rog predicted consumption",
+        "unidad": "MW",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_consumption_mw"
+      },
+      {
+        "nombre": "Real consumption",
+        "unidad": "MW",
+        "tabla": "system_operation_data",
+        "variable": "total_consumption_mw"
+      }
+    ]
+  },
+    {
+    "tituloKey": "apache.consumption",
+    "variables": [
+      {
+        "nombre": "Esios predicted consumption",
+        "unidad": "MW",
+        "tabla": "esios_data_spain",
+        "variable": "prevision_demanda_diaria"
+      },
+      {
+        "nombre": "Rog predicted consumption",
+        "unidad": "MW",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_consumption_mw"
+      },
+      {
+        "nombre": "Real consumption",
+        "unidad": "MW",
+        "tabla": "system_operation_data",
+        "variable": "total_consumption_mw"
+      }
+    ]
+  }
+
+]

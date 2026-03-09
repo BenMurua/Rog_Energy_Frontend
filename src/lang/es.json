@@ -5,7 +5,8 @@
       "prediction": "Predicción",
       "historic": "Histórico",
       "statistics": "Estadísticas",
-      "about": "Acerca de"
+      "about": "Acerca de",
+      "otherData": "Otros datos"
     },
     "graficas": "Gráficas",
     "contacto": "Contacto",
@@ -103,5 +104,9 @@
   },
   "SelectSystemDuration": {
     "label": "Seleccionar Duración del Sistema BESS (horas):"
+  },
+  "apache": {
+    "clima": "Clima Apache",
+    "consumption": "Consumo previsto"
   }
 }

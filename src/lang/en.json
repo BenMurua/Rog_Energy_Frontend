@@ -5,7 +5,8 @@
       "prediction": "Prediction",
       "historic": "Historic",
       "statistics": "Statistics",
-      "about": "About"
+      "about": "About",
+      "otherData": "Other data"
     },
     "graficas": "Charts",
     "contacto": "Contact",
@@ -72,8 +73,6 @@
     "chargeLabel": "Charge",
     "dischargeLabel": "Discharge"
   },
-  "statisticsChart": {
-  },
   "statistics": {
     "title": "Models Statistics",
     "1hour": "1 hour system",
@@ -97,6 +96,10 @@
   },
     "SelectSystemDuration": {
     "label": "Select BESS System Duration (hours):"
+  },
+  "apache": {
+    "clima": "Apache Weather",
+    "consumption": "Predicted consumption"
   }
 }
 
