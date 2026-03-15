@@ -62,6 +62,10 @@ const filterUniquePerDay = (data) => {
  * const { data, isLoading, error } = useMultipleEnergyData(queries, fecha_inicio, fecha_fin);
  * // data.price, data.charge1h, etc.
  */
+
+// Caché en memoria para evitar llamadas redundantes de los mismos datos exactos
+const apiCache = {};
+
 export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_fin, raw = false) {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -77,8 +81,29 @@ export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_
     }
 
     const fetchAll = async () => {
+      const startTime = Date.now();
       setIsLoading(true);
       setError(null);
+
+      // Usar fecha y las queries como clave para nuestro cache
+      const cacheKey = `${queriesKey}_${fecha_inicio}_${fecha_fin}_${raw}`;
+
+      // Función auxiliar para asegurar un tiempo mínimo de carga en pantalla
+      const finishLoadingWithDelay = (dataObj) => {
+        const elapsedTime = Date.now() - startTime;
+        const MIN_LOADING_TIME = 800; // 800ms para que luzca la animación de la batería
+        const remainingTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
+        
+        setTimeout(() => {
+          setData(dataObj);
+          setIsLoading(false);
+        }, remainingTime);
+      };
+
+      if (apiCache[cacheKey]) {
+        finishLoadingWithDelay(apiCache[cacheKey]);
+        return;
+      }
 
       try {
         // Ejecutar todas las queries en paralelo con Promise.allSettled
@@ -116,14 +141,17 @@ export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_
         } else if (failures.length > 0) {
           // Algunas fallaron, pero mostramos los datos que sí llegaron
           console.warn(`${failures.length} de ${results.length} queries fallaron`);
+        } else {
+          // Guardar en cache solo si todas tuvieron éxito
+          apiCache[cacheKey] = dataObj;
         }
 
-        setData(dataObj);
+        // Llamamos a la función auxiliar para asentar el mínimo de 800ms antes de enseñar
+        finishLoadingWithDelay(dataObj);
       } catch (err) {
         setError(err.message);
         console.error("Error fetching multiple energy data:", err);
-      } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Si hay excepción general, caemos rápido y mostramos el error
       }
     };
 

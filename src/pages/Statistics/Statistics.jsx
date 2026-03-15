@@ -8,9 +8,16 @@ import energyConfig from "../../config/energyQueries.json";
 
 const Statistics = () => {
   const { t } = useTranslation();
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+  const initialStartDate = "2025-12-18";
+
   const [dateRange, setDateRange] = useState({
-    fecha_inicio: "2025-12-18 00:00:00",
-    fecha_fin: "2025-12-22 00:00:00",
+    fecha_inicio: `${initialStartDate} 00:00:00`,
+    fecha_fin: `${yesterdayStr} 00:00:00`,
   });
   const [selected, setSelected] = useState([false, false, true]);
 
@@ -23,17 +30,15 @@ const Statistics = () => {
 
   const handleDateRangeChange = useCallback(
     (newDateRange) => {
-      if (
-        newDateRange.start !== dateRange.fecha_inicio ||
-        newDateRange.end !== dateRange.fecha_fin
-      ) {
-        setDateRange({
-          fecha_inicio: `${newDateRange.start} 00:00:00`,
-          fecha_fin: `${newDateRange.end} 00:00:00`,
-        });
-      }
+      const newInicio = `${newDateRange.start} 00:00:00`;
+      const newFin = `${newDateRange.end} 00:00:00`;
+      
+      setDateRange((prev) => {
+        if (prev.fecha_inicio === newInicio && prev.fecha_fin === newFin) return prev;
+        return { fecha_inicio: newInicio, fecha_fin: newFin };
+      });
     },
-    [dateRange.fecha_inicio, dateRange.fecha_fin]
+    []
   );
 
   const handleSelectionChange = useCallback((newSelected) => {
@@ -87,7 +92,12 @@ const Statistics = () => {
         capturePercentage={capturePercentage}
       />
       {isLoading ? (
-        <p>{t("prediction.loading")}</p>
+        <div className="battery-loader-container">
+          <div className="battery-loader">
+            <div className="battery-level"></div>
+          </div>
+          <p className="loading-text">{t("prediction.loading", "Loading...")}</p>
+        </div>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (

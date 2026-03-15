@@ -14,13 +14,15 @@ const StatisticsControl = ({
 }) => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState([false, false, true]);
-  const [startDate, setStartDate] = useState("2025-12-07");
-
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
   const yesterdayStr = yesterday.toISOString().slice(0, 10);
   const maxDate = yesterdayStr;
+
+  const initialStartDateStr = "2025-12-18";
+
+  const [startDate, setStartDate] = useState(initialStartDateStr);
   const [endDate, setEndDate] = useState(yesterdayStr);
 
   const associations = {

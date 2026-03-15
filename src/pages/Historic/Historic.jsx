@@ -50,7 +50,12 @@ const Historic = () => {
       </div>
       <div className="historic-chart">
         {isLoading ? (
-          <p>{t("historic.loading")}</p>
+          <div className="battery-loader-container">
+            <div className="battery-loader">
+              <div className="battery-level"></div>
+            </div>
+            <p className="loading-text">{t("historic.loading", "Loading...")}</p>
+          </div>
         ) : error ? (
           <p className="error">{error}</p>
         ) : (

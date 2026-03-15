@@ -25,9 +25,18 @@ const Prediction = () => {
   const [duration, setDuration] = useState("4h"); // valor inicial
   const { t } = useTranslation();
 
+  // Filtrar las queries para solo traer "price", "realPrice" y las de la duracion seleccionada
+  const filteredQueries = energyConfig.queries.filter((q) => {
+    return (
+      q.key === "price" ||
+      q.key === "realPrice" ||
+      q.key.endsWith(duration)
+    );
+  });
+
   // Un hook para llamar a la API
   const { data, isLoading, error } = useMultipleEnergyData(
-    energyConfig.queries,
+    filteredQueries,
     apiRange.fecha_inicio,
     apiRange.fecha_fin,
   );
@@ -113,7 +122,12 @@ const Prediction = () => {
       </div>
       <div className="prediction-chart">
         {isLoading ? (
-          <p>{t("prediction.loading")}</p>
+          <div className="battery-loader-container">
+            <div className="battery-loader">
+              <div className="battery-level"></div>
+            </div>
+            <p className="loading-text">{t("prediction.loading", "Loading...")}</p>
+          </div>
         ) : error ? (
           <p className="error">{error}</p>
         ) : (
