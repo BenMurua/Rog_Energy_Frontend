@@ -9,7 +9,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
-  color: #1976d2;
+  color: var(--secondary);
   letter-spacing: 0.5px;
 }
 
@@ -17,20 +17,20 @@
   padding: 0.6rem 1.2rem;
   font-size: 1.05rem;
   border-radius: 8px;
-  border: 1px solid #bdbdbd;
-  background: #f5f7fa;
-  color: #333;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--text);
   box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
   transition: border-color 0.2s;
 }
 
 .select-system-duration-select:focus {
-  border-color: #1976d2;
+  border-color: var(--secondary);
   outline: none;
 }
 
 .select-system-duration-select option {
-  background: #fff;
+  background: var(--card);
   color: #333;
 }
 

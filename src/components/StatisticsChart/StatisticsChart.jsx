@@ -85,7 +85,7 @@ export default function StatisticsChart({
           <Line
             type="monotone"
             dataKey="price"
-            stroke="#8884d8"
+            stroke="var(--primary)"
             name={data1Label}
             strokeWidth={2}
           />
@@ -93,7 +93,7 @@ export default function StatisticsChart({
             <Line
               type="monotone"
               dataKey="price2"
-              stroke="#82ca9d"
+              stroke="var(--secondary)"
               name={data2Label}
               strokeWidth={2}
             />

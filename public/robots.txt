@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /prediction
+Allow: /historic
+Allow: /statistics
+
+# Exclude potential private API routes if any mapping matches
+Disallow: /api/
+Disallow: /admin/
+
+# Point to sitemap for Google Search Console
+Sitemap: https://bess-optimizer.com/sitemap.xml

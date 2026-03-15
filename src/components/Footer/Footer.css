@@ -1,14 +1,20 @@
-/* Footer renovable */
+/* Footer Tech SaaS */
 footer {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-  color: var(--button-text);
+  background: linear-gradient(135deg, #022C22 0%, #064E3B 100%);
+  color: #FFFFFF;
   text-align: center;
   padding: 2rem 1rem;
   font-size: 0.9rem;
-  border-top: 2px solid var(--border);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: auto;
   position: relative;
-  box-shadow: 0 -4px 20px rgba(0, 102, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(4, 120, 87, 0.3);
+  opacity: 0.95;
+  transition: all 0.3s ease;
+}
+
+footer:hover {
+  opacity: 1;
 }
 
 footer::before {
@@ -18,7 +24,7 @@ footer::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
   pointer-events: none;
 }
 

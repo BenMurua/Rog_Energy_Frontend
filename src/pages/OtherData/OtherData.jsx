@@ -4,8 +4,11 @@ import Layout from "../../components/Layout/Layout";
 import ApacheGraph from "../../components/ApacheGraph/ApacheGraph";
 import apacheGraphConfig from "../../config/apacheGraphConfig.json";
 
+import { useTranslation } from "react-i18next";
+
 const OtherData = () => {
-  // Si necesitas cargar el JSON desde un endpoint, usa fetch. Aquí se importa directamente.
+  const { t } = useTranslation();
+  
   return (
     <div className="other-data-container">
       <div className="apache-graphs-grid">

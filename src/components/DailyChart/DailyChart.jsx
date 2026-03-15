@@ -75,24 +75,37 @@ export default function DailyChart({
           }))}
           margin={
             isMobile
-              ? { top: 5, right: 10, left: -15, bottom: 5 }
-              : { top: 5, right: 30, left: 20, bottom: 5 }
+              ? { top: 15, right: 10, left: -15, bottom: 10 }
+              : { top: 15, right: 30, left: 20, bottom: 10 }
           }
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" strokeOpacity={0.8} />
           <XAxis
             dataKey="hour"
-            tick={{ fontSize: isMobile ? 9 : 12 }}
+            tick={{ fontSize: isMobile ? 9 : 12, fill: "var(--text)", opacity: 0.8 }}
             interval={isMobile ? 7 : 2}
+            stroke="var(--text)"
+            strokeOpacity={0.4}
           />
           <YAxis
             domain={["auto", "auto"]}
             unit="€"
-            tick={{ fontSize: isMobile ? 9 : 12 }}
+            tick={{ fontSize: isMobile ? 9 : 12, fill: "var(--text)", opacity: 0.8 }}
             width={isMobile ? 45 : 60}
+            stroke="var(--text)"
+            strokeOpacity={0.4}
           />
-          <Tooltip />
-          <Legend />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "var(--background)",
+              borderColor: "var(--border)",
+              color: "var(--text)",
+              borderRadius: "8px",
+              boxShadow: "0 4px 20px var(--shadow)",
+            }}
+            itemStyle={{ color: "var(--text)" }}
+          />
+          <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: "20px" }} />
 
           {/* Franjas verdes para carga */}
           {chargePeriods.map((period, idx) => {
@@ -104,12 +117,12 @@ export default function DailyChart({
                 key={`charge-${idx}`}
                 x1={x1}
                 x2={x2}
-                fill="#4CAF50"
-                fillOpacity={0.3}
+                fill="var(--price-up)"
+                fillOpacity={0.15}
                 label={{
                   value: chargeLabel,
                   position: "insideTop",
-                  fill: "#4CAF50",
+                  fill: "var(--price-up)",
                   fontWeight: "bold",
                 }}
               />
@@ -127,12 +140,12 @@ export default function DailyChart({
                 key={`discharge-${idx}`}
                 x1={x1}
                 x2={x2}
-                fill="#F44336"
-                fillOpacity={0.3}
+                fill="var(--price-down)"
+                fillOpacity={0.15}
                 label={{
                   value: dischargeLabel,
                   position: "insideTop",
-                  fill: "#F44336",
+                  fill: "var(--price-down)",
                   fontWeight: "bold",
                 }}
               />
@@ -149,8 +162,8 @@ export default function DailyChart({
                 key={`optimal-charge-${idx}`}
                 x1={x1}
                 x2={x2}
-                fill="#2196F3"
-                fillOpacity={0.2}
+                fill="var(--secondary)"
+                fillOpacity={0.15}
               />
             );
           })}
@@ -165,8 +178,8 @@ export default function DailyChart({
                 key={`optimal-discharge-${idx}`}
                 x1={x1}
                 x2={x2}
-                fill="#FF9800"
-                fillOpacity={0.2}
+                fill="var(--warning)"
+                fillOpacity={0.15}
               />
             );
           })}
@@ -174,18 +187,21 @@ export default function DailyChart({
           <Line
             type="monotone"
             dataKey="price"
-            stroke="#2196F3"
-            strokeWidth={2}
+            stroke="var(--primary)"
+            strokeWidth={3}
             dot={false}
             name={data1Label}
+            activeDot={{ r: 6, fill: "var(--primary)", stroke: "var(--background)", strokeWidth: 2 }}
           />
           <Line
             type="monotone"
             dataKey="price2"
-            stroke="#FF9800"
+            stroke="var(--secondary)"
             strokeWidth={2}
+            strokeDasharray="5 5"
             dot={false}
             name={data2Label}
+            activeDot={{ r: 6, fill: "var(--secondary)", stroke: "var(--background)", strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>
@@ -204,10 +220,11 @@ export default function DailyChart({
               style={{
                 width: 18,
                 height: 18,
-                background: "#4CAF50",
+                background: "var(--price-up)",
                 opacity: 0.3,
                 borderRadius: 4,
                 display: "inline-block",
+                border: "1px solid var(--price-up)"
               }}
             ></span>
             {chargeLabel}
@@ -217,10 +234,11 @@ export default function DailyChart({
               style={{
                 width: 18,
                 height: 18,
-                background: "#F44336",
+                background: "var(--price-down)",
                 opacity: 0.3,
                 borderRadius: 4,
                 display: "inline-block",
+                border: "1px solid var(--price-down)"
               }}
             ></span>
             {dischargeLabel}
@@ -230,8 +248,8 @@ export default function DailyChart({
               style={{
                 width: 18,
                 height: 18,
-                background: "#2196F3",
-                opacity: 0.2,
+                background: "var(--secondary)",
+                opacity: 0.3,
                 borderRadius: 4,
                 display: "inline-block",
               }}
@@ -243,8 +261,8 @@ export default function DailyChart({
               style={{
                 width: 18,
                 height: 18,
-                background: "#FF9800",
-                opacity: 0.2,
+                background: "var(--warning)",
+                opacity: 0.3,
                 borderRadius: 4,
                 display: "inline-block",
               }}

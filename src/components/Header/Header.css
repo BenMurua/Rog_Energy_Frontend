@@ -1,67 +1,136 @@
-/* 🌱 Header */
+/* 🌱 Header Premium Glassmorphism */
 header {
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  color: var(--button-text);
+  background: linear-gradient(135deg, #022C22 0%, #064E3B 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #FFFFFF;
   padding: 1rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(4, 120, 87, 0.4);
+  transition: all 0.3s ease;
 }
 
 /* Logo */
 header .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--button-text);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #FFFFFF;
   text-decoration: none;
-  letter-spacing: 1px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #34D399, #10B981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
 /* Navegación (desktop) */
 header nav {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 header nav a {
-  color: var(--button-text);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.2s ease, transform 0.2s ease;
   padding: 0.5rem 1rem;
   border-radius: 8px;
+  position: relative;
 }
 
-header nav a:hover {
-  opacity: 0.8;
+header nav a:hover, header nav a.active {
+  color: #FFFFFF;
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
-/* Botón tema */
+/* Línea indicadora estilo SaaS para hovered/active */
+header nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: #34D399;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+header nav a:hover::after, header nav a.active::after {
+  width: 60%;
+}
+
+/* Controles derechos (Theme + Lang) */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Botón tema - Diseño Minimalista */
 header .theme-toggle {
   background: transparent;
-  border: 2px solid var(--button-text);
-  color: var(--button-text);
-  padding: 0.6rem 1.2rem;
-  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  font-size: 1.2rem;
-  line-height: 1;
-  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 header .theme-toggle:hover {
-  background-color: var(--button-text);
-  color: var(--primary);
-  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #34D399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+}
+
+/* Desplegable de idiomas - Ajustes Premium */
+.lang-select {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  /* Reset appearance nativo */
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+
+
+.lang-select:hover,
+.lang-select:focus {
+  border-color: #34D399;
+  outline: none;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+}
+
+.lang-select option {
+  background: var(--background);
+  color: var(--text);
 }
 
 /* Botón hamburguesa (oculto en desktop) */
@@ -70,7 +139,7 @@ header .menu-toggle {
   font-size: 1.6rem;
   background: transparent;
   border: none;
-  color: var(--button-text);
+  color: #FFFFFF;
   cursor: pointer;
 }
 
@@ -78,53 +147,24 @@ header .menu-toggle {
 @media (max-width: 768px) {
   header {
     flex-wrap: wrap;
+    padding: 1rem;
   }
 
-  /* Ocultar navegación por defecto en móvil */
   header nav {
     display: none;
     flex-direction: column;
     width: 100%;
-    padding: 1rem 0;
-    background: var(--background);
-    border-top: 1px solid var(--border);
+    padding: 1.5rem 0;
+    gap: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
   }
 
-  /* Mostrar cuando está abierto */
   header nav.open {
     display: flex;
   }
 
-  /* Botón hamburguesa visible en móvil */
   header .menu-toggle {
     display: block;
   }
-
-  header .theme-toggle,
-  header .lang-select {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-}
-
-
-/* Desplegable de idiomas */
-.lang-select {
-  background-color: var(--secondary);
-  color: var(--button-text);
-  border: 2px solid var(--button-text);
-  padding: 0.6rem 1.2rem;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  margin-left: 1rem;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}
-
-.lang-select:hover,
-.lang-select:focus {
-  background-color: var(--secondary-hover);
-  outline: none;
-  transform: scale(1.05);
 }

@@ -24,7 +24,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #0066ff, #00d4aa);
+  background: linear-gradient(45deg, var(--secondary), var(--primary));
   border-radius: 18px;
   z-index: -1;
   opacity: 0.3;
@@ -41,7 +41,7 @@
 .prediction-date-text {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #1976d2;
+  color: var(--secondary);
   margin: 20px 0;
   text-shadow: none;
   text-align: center;
@@ -51,7 +51,7 @@
 .optimal-charge-text,
 .optimal-discharge-text {
   font-weight: 500;
-  color: #333333;
+  color: var(--text);
   font-size: 1.1rem;
   text-shadow: none;
   margin: 15px 0 0 0;

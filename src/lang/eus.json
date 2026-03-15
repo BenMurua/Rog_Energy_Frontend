@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "⚡ BESS Flux",
+    "logo": "🔋 ROG Energy",
     "pages": {
       "prediction": "Iragarpena",
       "historic": "Historikoa",
@@ -115,5 +115,9 @@
     "co2": "CO₂ Intentsitatea",
     "omiePrice": "OMIE Prezioak 1 eta 2",
     "hydraulic": "Hidraulikoa Sorkuntza (Pilatua)"
+  },
+  "otherData": {
+    "title": "Datu Gehigarriak",
+    "subtitle": "sistemaren bigarren mailako metrikak, osagai laguntzaileak eta merkatuko parametro hedatuak aztertzen ditu."
   }
 }

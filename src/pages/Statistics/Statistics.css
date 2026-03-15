@@ -9,7 +9,7 @@
 
 .statistics-page h2 {
   font-size: 2rem;
-  color: #333;
+  color: var(--text);
 }
 
 @media (max-width: 768px) {

@@ -1,33 +1,76 @@
 .other-data-container {
-  padding: 1.5rem 2rem 2rem;
+  padding: 2rem 3rem 4rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  animation: fade-in-up 0.5s ease-out;
+}
+
+.other-data-header {
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.other-data-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.other-data-subtitle {
+  font-size: 1.1rem;
+  color: var(--text);
+  opacity: 0.8;
+  max-width: 800px;
+  line-height: 1.5;
 }
 
 .apache-graphs-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-@media (max-width: 1100px) {
-  .apache-graphs-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 2rem;
 }
 
 .apache-graph-card {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  /* visual polish handled entirely by ApacheGraph.css */
+  animation: fade-in-up 0.6s ease-out both;
 }
 
-@media (max-width: 680px) {
+/* Stagger animations for cards */
+.apache-graph-card:nth-child(1) { animation-delay: 0.1s; }
+.apache-graph-card:nth-child(2) { animation-delay: 0.2s; }
+.apache-graph-card:nth-child(3) { animation-delay: 0.3s; }
+.apache-graph-card:nth-child(4) { animation-delay: 0.4s; }
+.apache-graph-card:nth-child(5) { animation-delay: 0.5s; }
+.apache-graph-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .other-data-container {
+    padding: 1.5rem 1rem;
+  }
   .apache-graphs-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-
-  .other-data-container {
-    padding: 1rem;
+  .other-data-title {
+    font-size: 1.8rem;
   }
 }

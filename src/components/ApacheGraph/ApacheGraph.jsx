@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import useMultipleEnergyData from "../../hooks/useMultipleEnergyData";
 import "./ApacheGraph.css";
 
-const CHART_COLORS = ["#0066ff", "#00d4aa", "#7c3aed", "#f59e0b", "#ef4444"];
+const CHART_COLORS = ["#00D4AA", "#3B82F6", "#F59E0B", "#A78BFA", "#F97316", "#EC4899"];
 
 function buildChartOption({ categories, chartData, yUnit, stacked = false }) {
   return {
@@ -34,9 +34,11 @@ function buildChartOption({ categories, chartData, yUnit, stacked = false }) {
       },
     },
     legend: {
+      type: "scroll",
       data: chartData.map((s) => s.name),
-      top: 6,
-      left: "center",
+      top: 2,
+      left: 10,
+      right: 120,
       textStyle: { color: "#94a3b8", fontWeight: "600", fontSize: 11 },
       itemWidth: 18,
       itemHeight: 3,
@@ -54,7 +56,7 @@ function buildChartOption({ categories, chartData, yUnit, stacked = false }) {
         saveAsImage: { title: "Save" },
       },
       iconStyle: {
-        borderColor: "#0066ff",
+        borderColor: "#3B82F6",
         color: "rgba(0,102,255,0.15)",
       },
       emphasis: {
@@ -71,16 +73,16 @@ function buildChartOption({ categories, chartData, yUnit, stacked = false }) {
         bottom: 4,
         borderColor: "rgba(0,102,255,0.2)",
         fillerColor: "rgba(0,102,255,0.15)",
-        handleStyle: { color: "#0066ff", borderColor: "#0066ff" },
-        moveHandleStyle: { color: "#0066ff" },
+        handleStyle: { color: "#3B82F6", borderColor: "#3B82F6" },
+        moveHandleStyle: { color: "#3B82F6" },
         textStyle: { color: "#64748b", fontSize: 10 },
         dataBackground: {
-          lineStyle: { color: "#0066ff44" },
-          areaStyle: { color: "#0066ff11" },
+          lineStyle: { color: "#3B82F644" },
+          areaStyle: { color: "#3B82F611" },
         },
         selectedDataBackground: {
-          lineStyle: { color: "#0066ff" },
-          areaStyle: { color: "#0066ff33" },
+          lineStyle: { color: "#3B82F6" },
+          areaStyle: { color: "#3B82F633" },
         },
       },
     ],
@@ -111,7 +113,7 @@ function buildChartOption({ categories, chartData, yUnit, stacked = false }) {
       axisLabel: { color: "#64748b", fontSize: 11 },
       splitLine: { lineStyle: { color: "rgba(51,65,85,0.5)", type: "dashed" } },
     },
-    grid: { left: 55, right: 20, top: 46, bottom: 38 },
+    grid: { left: 55, right: 20, top: 60, bottom: 45 },
     color: CHART_COLORS,
     series: chartData.map((s, idx) => ({
       name: s.name,

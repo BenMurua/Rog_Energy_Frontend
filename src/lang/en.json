@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "⚡ BESS Flux",
+    "logo": "🔋 ROG Energy",
     "pages":{
       "prediction": "Prediction",
       "historic": "Historic",
@@ -107,6 +107,10 @@
     "co2": "CO₂ Intensity",
     "omiePrice": "OMIE Prices 1 & 2",
     "hydraulic": "Hydraulic Generation (Stacked)"
+  },
+  "otherData": {
+    "title": "Supplementary Data",
+    "subtitle": "Analyze additional system metrics, auxiliary components, and extended market parameters."
   }
 }
 
