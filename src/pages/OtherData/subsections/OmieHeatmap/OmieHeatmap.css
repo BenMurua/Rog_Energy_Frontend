@@ -1,0 +1,52 @@
+.heatmap-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.heatmap-grid-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.heatmap-grid {
+  min-width: 980px;
+}
+
+.heatmap-row {
+  display: grid;
+  grid-template-columns: 64px repeat(24, minmax(24px, 1fr));
+}
+
+.heatmap-header-row {
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.heatmap-day-cell,
+.heatmap-hour-cell,
+.heatmap-cell {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  text-align: center;
+  font-size: 0.78rem;
+  padding: 4px;
+}
+
+.heatmap-cell {
+  height: 22px;
+  padding: 0;
+}
+
+.heatmap-legend {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heatmap-gradient {
+  flex: 1;
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(90deg, #33a852 0%, #f7d038 50%, #df3b2f 100%);
+}

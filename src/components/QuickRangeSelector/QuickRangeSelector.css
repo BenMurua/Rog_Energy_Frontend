@@ -1,0 +1,59 @@
+.quick-range-selector {
+  display: grid;
+  gap: 12px;
+}
+
+.quick-range-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-range-button {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 7px 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-range-button.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.quick-range-custom {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+.quick-range-custom label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.quick-range-custom input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  padding: 8px;
+}
+
+.apply-custom {
+  border: none;
+  border-radius: 8px;
+  background: var(--secondary);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 9px 12px;
+  cursor: pointer;
+}

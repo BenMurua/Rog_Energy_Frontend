@@ -1,0 +1,91 @@
+.section-panel {
+  margin: 10px 24px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 14px 30px var(--shadow);
+}
+
+.section-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpi-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), rgba(0, 212, 170, 0.04));
+}
+
+.kpi-label {
+  display: block;
+  color: var(--text);
+  opacity: 0.75;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.kpi-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.chart-shell {
+  width: 100%;
+  min-height: 320px;
+  margin-bottom: 14px;
+}
+
+.table-shell {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.data-table th {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .section-panel {
+    margin: 10px 12px 20px;
+    padding: 12px;
+  }
+
+  .chart-shell {
+    min-height: 250px;
+  }
+}
