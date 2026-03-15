@@ -18,6 +18,8 @@ const OtherData = () => {
               apiKeys={config.variables.map((v) => v.api_key)}
               tablas={config.variables.map((v) => v.tabla)}
               variablesApi={config.variables.map((v) => v.variable)}
+              defaultStartDaysAgo={config.defaultStartDaysAgo ?? 0}
+              stacked={config.stacked ?? false}
             />
           </div>
         ))}

@@ -107,6 +107,13 @@
   },
   "apache": {
     "clima": "Apache Eguraldia",
-    "consumption": "Aurreikusitako kontsumoa"
+    "consumption": "Aurreikusitako Kontsumoa",
+    "price": "OMIE Merkatu Prezioa",
+    "renewables": "Berriztagarrien Sorkuntza",
+    "wind": "Haize Sorkuntza",
+    "solar": "Eguzki Sorkuntza",
+    "co2": "CO₂ Intentsitatea",
+    "omiePrice": "OMIE Prezioak 1 eta 2",
+    "hydraulic": "Hidraulikoa Sorkuntza (Pilatua)"
   }
 }

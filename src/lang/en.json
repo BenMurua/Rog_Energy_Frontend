@@ -99,7 +99,14 @@
   },
   "apache": {
     "clima": "Apache Weather",
-    "consumption": "Predicted consumption"
+    "consumption": "Predicted Consumption",
+    "price": "OMIE Market Price",
+    "renewables": "Renewable Generation",
+    "wind": "Wind Generation",
+    "solar": "Solar Generation",
+    "co2": "CO₂ Intensity",
+    "omiePrice": "OMIE Prices 1 & 2",
+    "hydraulic": "Hydraulic Generation (Stacked)"
   }
 }
 

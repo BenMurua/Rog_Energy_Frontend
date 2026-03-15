@@ -1,22 +1,33 @@
 .other-data-container {
-  padding: 2rem;
-  text-align: center;
+  padding: 1.5rem 2rem 2rem;
 }
 
 .apache-graphs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 1100px) {
+  .apache-graphs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .apache-graph-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(0,102,255,0.08);
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  /* visual polish handled entirely by ApacheGraph.css */
+}
+
+@media (max-width: 680px) {
+  .apache-graphs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .other-data-container {
+    padding: 1rem;
+  }
 }

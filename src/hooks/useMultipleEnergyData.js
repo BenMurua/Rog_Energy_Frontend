@@ -25,9 +25,9 @@ const mapToChartFormat = (items, variable) => {
     const hour = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
     const dateStr = dt.toLocaleDateString('es-ES');
     const rawValue = it[variable];
-    // Si es número, redondearlo; si es booleano, mantenerlo
-    const price = typeof rawValue === "boolean" ? rawValue : 
-                  rawValue != null ? Math.round(Number(rawValue)) : 0;
+    // Si es booleano, mantenerlo; si es número, conservar decimales
+    const price = typeof rawValue === "boolean" ? rawValue :
+                  rawValue != null ? Number(rawValue) : 0;
     return { hour, date: dateStr, price };
   });
 };

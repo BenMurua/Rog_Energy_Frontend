@@ -1,6 +1,7 @@
 [
   {
     "tituloKey": "apache.consumption",
+    "defaultStartDaysAgo": 1,
     "variables": [
       {
         "nombre": "Esios predicted consumption",
@@ -22,28 +23,89 @@
       }
     ]
   },
-    {
-    "tituloKey": "apache.consumption",
+  {
+    "tituloKey": "apache.price",
+    "defaultStartDaysAgo": 7,
     "variables": [
       {
-        "nombre": "Esios predicted consumption",
-        "unidad": "MW",
-        "tabla": "esios_data_spain",
-        "variable": "prevision_demanda_diaria"
+        "nombre": "Predicted OMIE price",
+        "unidad": "€/MWh",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
       },
       {
-        "nombre": "Rog predicted consumption",
+        "nombre": "Real OMIE price",
+        "unidad": "€/MWh",
+        "tabla": "system_operation_data",
+        "variable": "omie_price_eur_mwh"
+      }
+    ]
+  },
+  {
+    "tituloKey": "apache.renewables",
+    "defaultStartDaysAgo": 14,
+    "variables": [
+      {
+        "nombre": "Wind generation",
         "unidad": "MW",
         "tabla": "V1_predicted_data",
-        "variable": "predicted_consumption_mw"
+        "variable": "predicted_omie_price_eur_mw"
       },
       {
-        "nombre": "Real consumption",
+        "nombre": "Solar generation",
         "unidad": "MW",
-        "tabla": "system_operation_data",
-        "variable": "total_consumption_mw"
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
+      }
+    ]
+  },
+  {
+    "tituloKey": "apache.co2",
+    "defaultStartDaysAgo": 90,
+    "variables": [
+      {
+        "nombre": "CO2 intensity",
+        "unidad": "gCO₂/kWh",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
+      }
+    ]
+  },
+  {
+    "tituloKey": "apache.omiePrice",
+    "defaultStartDaysAgo": 30,
+    "variables": [
+      {
+        "nombre": "OMIE Price 1",
+        "unidad": "€/MWh",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
+      },
+      {
+        "nombre": "OMIE Price 2",
+        "unidad": "€/MWh",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
+      }
+    ]
+  },
+  {
+    "tituloKey": "apache.hydraulic",
+    "defaultStartDaysAgo": 14,
+    "stacked": true,
+    "variables": [
+      {
+        "nombre": "Hidráulica UGH",
+        "unidad": "MW",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
+      },
+      {
+        "nombre": "Hidráulica no UGH",
+        "unidad": "MW",
+        "tabla": "V1_predicted_data",
+        "variable": "predicted_omie_price_eur_mw"
       }
     ]
   }
-
 ]

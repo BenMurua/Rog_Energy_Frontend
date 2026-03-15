@@ -107,6 +107,13 @@
   },
   "apache": {
     "clima": "Clima Apache",
-    "consumption": "Consumo previsto"
+    "consumption": "Consumo Previsto",
+    "price": "Precio Mercado OMIE",
+    "renewables": "Generación Renovable",
+    "wind": "Generación Eólica",
+    "solar": "Generación Solar",
+    "co2": "Intensidad CO₂",
+    "omiePrice": "Precios OMIE 1 y 2",
+    "hydraulic": "Generación Hidráulica (Apilada)"
   }
 }
