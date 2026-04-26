@@ -68,8 +68,6 @@ export default function IntradayPrediction() {
               data1Label={`Prediccion ${sessionId}`}
               chargeLabel="Carga"
               dischargeLabel="Descarga"
-              optimalChargeLabel="Carga optima"
-              optimalDischargeLabel="Descarga optima"
               showRealLine={false}
               showConfidenceBand={false}
             />

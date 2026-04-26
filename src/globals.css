@@ -1,0 +1,380 @@
+/* ⚡ GLOBAL STYLES - Consolidated Design System */
+
+/* ============================================
+   1. RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Inter', 'Poppins', sans-serif;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   2. COLOR SYSTEM & THEME VARIABLES
+   ============================================ */
+
+/* ☀️ Light Mode */
+:root {
+  /* Base colors */
+  --background: #F8FAFC;
+  --card: #FFFFFF;
+  --text: #0F172A;
+  --border: rgba(15, 23, 42, 0.1);
+  --shadow: rgba(15, 23, 42, 0.08);
+  --button-text: #FFFFFF;
+
+  /* Semantic colors */
+  --primary: #00D4AA;
+  --primary-hover: #00A68A;
+  --secondary: #3B82F6;
+  --secondary-hover: #2563EB;
+  --accent: #3B82F6;
+  --price-up: #22C55E;
+  --price-down: #EF4444;
+  --warning: #F59E0B;
+
+  /* Header/Footer gradient */
+  --header-bg-start: #022C22;
+  --header-bg-end: #064E3B;
+  --header-accent: #34D399;
+
+  /* Chart palette */
+  --chart-1: #00D4AA;
+  --chart-2: #3B82F6;
+  --chart-3: #F59E0B;
+  --chart-4: #A78BFA;
+  --chart-5: #F97316;
+  --chart-6: #EC4899;
+
+  /* Typography scale for shared controls */
+  --font-size-control-label: 0.95rem;
+  --font-size-control-input: 0.95rem;
+  --font-size-control-emphasis: 1rem;
+  --font-size-sidebar-title: 1.1rem;
+  --font-size-sidebar-body: 0.95rem;
+
+  /* Layout: Sidebar dimensions & spacing */
+  --sidebar-width: 320px;
+  --sidebar-height: auto;
+  --sidebar-padding: 2rem;
+  --sidebar-gap: 20px;
+}
+
+/* 🌙 Dark Mode */
+[data-theme="dark"] {
+  /* Base colors */
+  --background: #0D1117;
+  --card: #1C2333;
+  --text: #F0F4F8;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --button-text: #FFFFFF;
+
+  /* Semantic colors */
+  --primary: #00D4AA;
+  --primary-hover: #00A68A;
+  --secondary: #3B82F6;
+  --secondary-hover: #2563EB;
+  --accent: #3B82F6;
+  --price-up: #22C55E;
+  --price-down: #EF4444;
+  --warning: #F59E0B;
+
+  /* Header/Footer gradient */
+  --header-bg-start: #022C22;
+  --header-bg-end: #064E3B;
+  --header-accent: #34D399;
+
+  /* Chart palette */
+  --chart-1: #00D4AA;
+  --chart-2: #3B82F6;
+  --chart-3: #F59E0B;
+  --chart-4: #A78BFA;
+  --chart-5: #F97316;
+  --chart-6: #EC4899;
+}
+
+/* ============================================
+   3. BACKGROUND GRADIENTS & EFFECTS
+   ============================================ */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(0, 230, 118, 0.05) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================
+   4. REUSABLE COMPONENTS
+   ============================================ */
+
+/* Buttons */
+button, .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.primary, .btn.primary {
+  background-color: var(--secondary);
+  color: var(--button-text);
+}
+
+button.primary:hover, .btn.primary:hover {
+  background-color: var(--secondary-hover);
+}
+
+button.secondary, .btn.secondary {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+button.secondary:hover, .btn.secondary:hover {
+  background-color: var(--background);
+  border-color: var(--primary);
+}
+
+/* Select inputs & Dropdowns */
+select, .select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--secondary);
+  color: var(--button-text);
+  font-weight: 500;
+  font-size: var(--font-size-control-input);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+}
+
+select:hover, .select:hover,
+select:focus, .select:focus {
+  background-color: var(--secondary-hover);
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* Cards & Containers */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   5. ANIMATIONS & KEYFRAMES
+   ============================================ */
+
+/* Battery Loader */
+.battery-loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  min-height: 200px;
+  width: 100%;
+}
+
+.battery-loader {
+  width: 50px;
+  height: 25px;
+  border: 3px solid var(--text);
+  border-radius: 4px;
+  position: relative;
+  padding: 2px;
+}
+
+.battery-loader::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 10px;
+  background-color: var(--text);
+  border-radius: 0 2px 2px 0;
+}
+
+.battery-level {
+  height: 100%;
+  background-color: var(--price-up);
+  border-radius: 2px;
+  animation: charging 2s ease-in-out infinite;
+}
+
+.loading-text {
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: 1px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes charging {
+  0% { width: 0%; background-color: var(--price-down); }
+  50% { width: 50%; background-color: var(--warning); }
+  100% { width: 100%; background-color: var(--price-up); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================
+   6. UTILITY CLASSES
+   ============================================ */
+
+/* Sidebar Base Component */
+.sidebar-base {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: var(--sidebar-padding);
+  position: relative;
+  flex: 0 0 var(--sidebar-width);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-base::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--secondary), var(--primary));
+  border-radius: 18px;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+/* Control Section Base */
+.controls-section {
+  padding: 1.5rem;
+  margin-bottom: 15px;
+  text-align: left;
+  position: relative;
+}
+
+.error {
+  color: var(--price-down);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.success {
+  color: var(--price-up);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.warning {
+  color: var(--warning);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: rgba(var(--text-rgb), 0.6);
+}
+
+/* ============================================
+   7. RESPONSIVE BASELINE
+   ============================================ */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  button, .btn,
+  select, .select {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}

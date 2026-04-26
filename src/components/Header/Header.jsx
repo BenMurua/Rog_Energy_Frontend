@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Header.css";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-
+import { usePredictionVersion } from "../../context/PredictionVersionContext";
 import { RoutesValues } from "../../models/RoutesValues.js";
 
 export default function Header() {
   const [theme, setTheme] = useState("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
+  const { predictionVersion, setPredictionVersion } = usePredictionVersion();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
@@ -57,6 +56,21 @@ export default function Header() {
           {t("header.pages.otherData")}
         </NavLink>
       </nav>
+
+      <div className="prediction-version-selector">
+        <label>{t("prediction.dataSourceLabel")}:</label>
+        <select
+          value={predictionVersion}
+          onChange={(e) => setPredictionVersion(e.target.value)}
+          className="version-select"
+        >
+          <option value="V1">V1</option>
+          <option value="V2">V2</option>
+          <option value="V3">V3</option>
+          <option value="V4">V4</option>
+          <option value="V5">V5</option>
+        </select>
+      </div>
 
       <select
         className="lang-select"

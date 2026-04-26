@@ -4,7 +4,13 @@ import useMultipleEnergyData from "../../../../hooks/useMultipleEnergyData";
 import { useTranslation } from "react-i18next";
 import energyConfig from "../../../../config/energyQueries.json";
 import SelectSystemDuration from "../../../../components/SelectSystemDuration/SelectSystemDuration";
+import { usePredictionVersion } from "../../../../context/PredictionVersionContext";
 import PredictionInfoSidebar from "./PredictionInfoSidebar";
+import {
+  buildPeriodSeries,
+  findBestWindow,
+  getWindowSizeFromDuration,
+} from "../../../../utils/predictionPeriods";
 
 export default function DailyPrediction() {
   const today = new Date();
@@ -12,74 +18,39 @@ export default function DailyPrediction() {
   tomorrow.setDate(today.getDate() + 1);
   const tomorrowStr = tomorrow.toISOString().slice(0, 10);
   const predictionDate = tomorrow.toLocaleDateString();
-  const dayAfterTomorrow = new Date(tomorrow);
-  dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
-  const dayAfterTomorrowStr = dayAfterTomorrow.toISOString().slice(0, 10);
 
-  const [apiRange] = useState({
-    fecha_inicio: `${tomorrowStr} 00:00:00`,
-    fecha_fin: `${dayAfterTomorrowStr} 00:00:00`,
-  });
   const [duration, setDuration] = useState("4h");
+  const { predictionVersion } = usePredictionVersion();
+  const priceTable = `${predictionVersion}_predicted_data`;
   const { t } = useTranslation();
 
-  const filteredQueries = energyConfig.queries.filter((q) => {
-    return (
-      q.key === "price" || q.key === "realPrice" || q.key.endsWith(duration)
-    );
-  });
+  const fecha_inicio = `${tomorrowStr} 00:00:00`;
+  const fecha_fin = `${tomorrowStr} 23:45:00`;
+
+  const filteredQueries = energyConfig.queries
+    .filter((q) => q.key === "price")
+    .map((q) => (q.key === "price" ? { ...q, tabla: priceTable } : q));
 
   const { data, isLoading, error } = useMultipleEnergyData(
     filteredQueries,
-    apiRange.fecha_inicio,
-    apiRange.fecha_fin,
+    fecha_inicio,
+    fecha_fin,
   );
 
-  const getPeriodsString = (period) => {
-    if (!period || period.length === 0) return t("prediction.not_available");
-    const periods = [];
-    let start = null;
+  const priceSeries = data.price || [];
+  const windowSize = getWindowSizeFromDuration(duration);
 
-    period.forEach((item, index) => {
-      const isActive = item.price === true || item.price === 1;
-      if (isActive && start === null) {
-        start = item.hour;
-      } else if (!isActive && start !== null) {
-        let end = period[index - 1].hour;
-        const [hour, min] = end.split(":").map(Number);
-        const totalMinutes = hour * 60 + min + 15;
-        const newHour = Math.floor(totalMinutes / 60);
-        const newMin = totalMinutes % 60;
-        end = `${String(newHour).padStart(2, "0")}:${String(newMin).padStart(2, "0")}`;
-        periods.push(`${start}-${end}`);
-        start = null;
-      }
-    });
+  const chargeWindow = findBestWindow(priceSeries, windowSize, "min");
+  const dischargeWindow = findBestWindow(priceSeries, windowSize, "max");
 
-    if (start !== null) {
-      let end = period[period.length - 1].hour;
-      const [hour, min] = end.split(":").map(Number);
-      const totalMinutes = hour * 60 + min + 15;
-      const newHour = Math.floor(totalMinutes / 60);
-      const newMin = totalMinutes % 60;
-      end = `${String(newHour).padStart(2, "0")}:${String(newMin).padStart(2, "0")}`;
-      periods.push(`${start}-${end}`);
-    }
-
-    return periods.join(", ");
-  };
-
-  const bestChargeTimeframe = getPeriodsString(data[`charge${duration}`]);
-  const bestDischargeTimeframe = getPeriodsString(data[`discharge${duration}`]);
+  const chargePeriod = buildPeriodSeries(priceSeries, chargeWindow);
+  const dischargePeriod = buildPeriodSeries(priceSeries, dischargeWindow);
 
   return (
     <div className="prediction-container">
-      <div className="prediction-sidebar">
-        <PredictionInfoSidebar
-          predictionDate={predictionDate}
-          bestChargeTimeframe={bestChargeTimeframe}
-          bestDischargeTimeframe={bestDischargeTimeframe}
-        />
+      <div className="sidebar-base prediction-sidebar">
+        <SelectSystemDuration value={duration} onChange={setDuration} />
+        <PredictionInfoSidebar predictionDate={predictionDate} />
       </div>
       <div className="prediction-chart">
         {isLoading ? (
@@ -95,20 +66,15 @@ export default function DailyPrediction() {
           <p className="error">{error}</p>
         ) : (
           <DailyChart
-            data={data.price || []}
+            data={priceSeries}
             data2={null}
-            chargePeriod={data[`charge${duration}`] || []}
-            dischargePeriod={data[`discharge${duration}`] || []}
+            chargePeriod={chargePeriod}
+            dischargePeriod={dischargePeriod}
             data1Label={t("prediction.predictedPrice")}
             chargeLabel={t("prediction.chargeLabel")}
             dischargeLabel={t("prediction.dischargeLabel")}
-            optimalChargeLabel={t("prediction.optimalChargeLabel")}
-            optimalDischargeLabel={t("prediction.optimalDischargeLabel")}
             showRealLine={false}
             showConfidenceBand={false}
-            controls={
-              <SelectSystemDuration value={duration} onChange={setDuration} />
-            }
           />
         )}
       </div>

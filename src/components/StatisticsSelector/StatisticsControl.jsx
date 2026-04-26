@@ -25,22 +25,11 @@ const StatisticsControl = ({
   const [startDate, setStartDate] = useState(initialStartDateStr);
   const [endDate, setEndDate] = useState(yesterdayStr);
 
-  const associations = {
-    1: "Processed: First text",
-    2: "Processed: Second text",
-    3: "Processed: Third text",
-  };
-
   const texts = [
     t("statistics.1hour"),
     t("statistics.2hour"),
     t("statistics.4hour"),
   ];
-
-  // Función "biblioteca" que asigna otro texto basado en el index
-  const processText = (index) => {
-    return t(`statistics.processed${index + 1}`);
-  };
 
   const handleCheckboxChange = (index) => {
     const newSelected = [false, false, false];
@@ -74,7 +63,7 @@ const StatisticsControl = ({
   );
 
   return (
-    <div className="statistics-control-container">
+    <div className="sidebar-base statistics-control-container">
       <h2>{t("statistics.title")}</h2>
       <div className="date-selector-row">
         <label className="Label">{t("statistics.startingDate")}:</label>
@@ -106,14 +95,14 @@ const StatisticsControl = ({
       </div>
       <div className="averages">
         <div className="average-line">
-          <span style={{ fontSize: "larger" }}>
+          <span className="average-text">
             {t("statistics.idealPriceSpread")}:{" "}
             {idealAvg !== undefined ? idealAvg.toFixed(2) + " €/MWh" : "N/A"} (
             {idealCount} {t("statistics.days")})
           </span>
         </div>
         <div className="average-line">
-          <span style={{ fontSize: "larger" }}>
+          <span className="average-text">
             {t("statistics.predictionPriceSpread")}:{" "}
             {predictionAvg !== undefined
               ? predictionAvg.toFixed(2) + " €/MWh"
@@ -122,7 +111,7 @@ const StatisticsControl = ({
           </span>
         </div>
         <div className="average-line">
-          <span style={{ fontSize: "larger" }}>
+          <span className="average-text">
             {t("statistics.capturePercentage")}:{" "}
             {capturePercentage !== undefined
               ? capturePercentage.toFixed(2) + "%"

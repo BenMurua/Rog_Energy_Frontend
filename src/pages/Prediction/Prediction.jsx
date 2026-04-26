@@ -7,6 +7,12 @@ import useMultipleEnergyData from "../../hooks/useMultipleEnergyData";
 import { useTranslation } from "react-i18next";
 import energyConfig from "../../config/energyQueries.json";
 import SelectSystemDuration from "../../components/SelectSystemDuration/SelectSystemDuration";
+import { usePredictionVersion } from "../../context/PredictionVersionContext";
+import {
+  buildPeriodSeries,
+  findBestWindow,
+  getWindowSizeFromDuration,
+} from "../../utils/predictionPeriods";
 
 const Prediction = () => {
   const today = new Date();
@@ -14,105 +20,40 @@ const Prediction = () => {
   tomorrow.setDate(today.getDate() + 1);
   const tomorrowStr = tomorrow.toISOString().slice(0, 10);
   const predictionDate = tomorrow.toLocaleDateString();
-  const dayAfterTomorrow = new Date(tomorrow);
-  dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
-  const dayAfterTomorrowStr = dayAfterTomorrow.toISOString().slice(0, 10);
 
-  const [apiRange, setApiRange] = useState({
-    fecha_inicio: `${tomorrowStr} 00:00:00`,
-    fecha_fin: `${dayAfterTomorrowStr} 00:00:00`,
-  });
-  const [duration, setDuration] = useState("4h"); // valor inicial
+  const [duration, setDuration] = useState("4h");
+  const { predictionVersion } = usePredictionVersion();
+  const priceTable = `${predictionVersion}_predicted_data`;
   const { t } = useTranslation();
 
-  // Filtrar las queries para solo traer "price", "realPrice" y las de la duracion seleccionada
-  const filteredQueries = energyConfig.queries.filter((q) => {
-    return q.key === "price" || q.key.endsWith(duration);
-  });
+  // Filtrar solo los datos necesarios: predicción y precio real
+  const filteredQueries = energyConfig.queries
+    .filter((q) => q.key === "price" || q.key === "realPrice")
+    .map((q) => (q.key === "price" ? { ...q, tabla: priceTable } : q));
 
-  // Un hook para llamar a la API
   const { data, isLoading, error } = useMultipleEnergyData(
     filteredQueries,
-    apiRange.fecha_inicio,
-    apiRange.fecha_fin,
+    `${tomorrowStr} 00:00:00`,
+    `${tomorrowStr} 23:45:00`,
   );
 
-  // Calcular los periodos óptimos para cargar y descargar
-  const getPeriodsString = (period) => {
-    if (!period || period.length === 0) return t("prediction.not_available");
-    const periods = [];
-    let start = null;
-    period.forEach((item, index) => {
-      const isActive = item.price === true || item.price === 1;
-      if (isActive && start === null) {
-        start = item.hour;
-      } else if (!isActive && start !== null) {
-        let end = period[index - 1].hour;
-        // Sumar 15 minutos al end
-        const [hour, min] = end.split(":").map(Number);
-        const totalMinutes = hour * 60 + min + 15;
-        const newHour = Math.floor(totalMinutes / 60);
-        const newMin = totalMinutes % 60;
-        end = `${String(newHour).padStart(2, "0")}:${String(newMin).padStart(
-          2,
-          "0",
-        )}`;
-        periods.push(`${start}-${end}`);
-        start = null;
-      }
-    });
-    if (start !== null) {
-      let end = period[period.length - 1].hour;
-      // Sumar 15 minutos al end
-      const [hour, min] = end.split(":").map(Number);
-      const totalMinutes = hour * 60 + min + 15;
-      const newHour = Math.floor(totalMinutes / 60);
-      const newMin = totalMinutes % 60;
-      end = `${String(newHour).padStart(2, "0")}:${String(newMin).padStart(
-        2,
-        "0",
-      )}`;
-      periods.push(`${start}-${end}`);
-    }
-    return periods.join(", ");
-  };
-  // Obtener solo el primer bloque de carga/descarga
-  const getFirstBlock = (period) => {
-    const items = period?.filter((item) => item.price === true) || [];
-    if (items.length === 0) return [];
-    const block = [];
-    block.push(items[0]);
-    for (let i = 1; i < items.length; i++) {
-      const currentHour = parseInt(items[i].hour.split(":")[0]);
-      const prevHour = parseInt(items[i - 1].hour.split(":")[0]);
-      if (currentHour === prevHour + 1) {
-        block.push(items[i]);
-      } else {
-        break;
-      }
-    }
-    return block;
-  };
+  const priceSeries = data.price || [];
+  const realPriceSeries = data.realPrice || [];
+  const windowSize = getWindowSizeFromDuration(duration);
 
-  const chargePeriodFiltered = getFirstBlock(data[`charge${duration}`]);
-  const dischargePeriodFiltered = getFirstBlock(data[`discharge${duration}`]);
-  const bestChargeTimeframe = getPeriodsString(data[`charge${duration}`]);
-  const bestDischargeTimeframe = getPeriodsString(data[`discharge${duration}`]);
+  const chargeWindow = findBestWindow(priceSeries, windowSize, "min");
+  const dischargeWindow = findBestWindow(priceSeries, windowSize, "max");
+
+  const chargePeriod = buildPeriodSeries(priceSeries, chargeWindow);
+  const dischargePeriod = buildPeriodSeries(priceSeries, dischargeWindow);
 
   return (
     <div className="prediction-container">
-      <div className="prediction-sidebar">
-        <div className="prediction-controls">
+      <div className="sidebar-base prediction-sidebar">
+        <div className="controls-section prediction-controls">
           <SelectSystemDuration value={duration} onChange={setDuration} />
           <p className="prediction-date-text">
             {t("prediction.for_date", { date: predictionDate })}
-          </p>
-          <p className="optimal-charge-text">
-            {t("prediction.optimal_charge_timeframe")} {bestChargeTimeframe}
-          </p>
-          <p className="optimal-discharge-text">
-            {t("prediction.optimal_discharge_timeframe")}{" "}
-            {bestDischargeTimeframe}
           </p>
         </div>
       </div>
@@ -130,16 +71,14 @@ const Prediction = () => {
           <p className="error">{error}</p>
         ) : (
           <DailyChart
-            data={data.price || []}
-            data2={data.realPrice || []}
-            chargePeriod={data[`charge${duration}`] || []}
-            dischargePeriod={data[`discharge${duration}`] || []}
+            data={priceSeries}
+            data2={realPriceSeries}
+            chargePeriod={chargePeriod}
+            dischargePeriod={dischargePeriod}
             data1Label={t("prediction.predictedPrice")}
             data2Label={t("prediction.realPrice")}
             chargeLabel={t("prediction.chargeLabel")}
             dischargeLabel={t("prediction.dischargeLabel")}
-            optimalChargeLabel={t("prediction.optimalChargeLabel")}
-            optimalDischargeLabel={t("prediction.optimalDischargeLabel")}
           />
         )}
       </div>

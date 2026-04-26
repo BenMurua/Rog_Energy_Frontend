@@ -27,10 +27,7 @@
     "realPrice": "Benetako Prezioa",
     "chargeLabel": "Karga",
     "dischargeLabel": "Deskarga",
-    "optimalChargeLabel": "Karga Optimoa",
-    "optimalDischargeLabel": "Deskarga Optimoa",
-    "optimal_charge_timeframe": "Karga periodo optimoak:",
-    "optimal_discharge_timeframe": "Deskarga periodo optimoak:",
+    "dataSourceLabel": "Iragarritako datuen bertsioa:",
     "not_available": "E/E",
     "for_date": "Iragarpena {{date}}-(e)rako"
   },
@@ -67,9 +64,7 @@
     "predictedPrice": "Iragarritako Prezioa",
     "realPrice": "Benetako Prezioa",
     "chargeLabel": "Karga",
-    "dischargeLabel": "Deskarga",
-    "optimalChargeLabel": "Karga Optimoa",
-    "optimalDischargeLabel": "Deskarga Optimoa"
+    "dischargeLabel": "Deskarga"
   },
   "statistics": {
     "title": "Estatistiken Grafikoa",

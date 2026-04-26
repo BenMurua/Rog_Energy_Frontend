@@ -28,8 +28,6 @@ export default function DailyChart(props) {
     data2Label = "Real Price",
     chargeLabel = "Charge",
     dischargeLabel = "Discharge",
-    optimalChargeLabel = "Optimal Charge",
-    optimalDischargeLabel = "Optimal Discharge",
     showBandLegend = false,
     priceThresholds,
     showRealLine = true,
@@ -428,7 +426,7 @@ export default function DailyChart(props) {
                 display: "inline-block",
               }}
             ></span>
-            {optimalChargeLabel}
+            {chargeLabel}
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span
@@ -441,7 +439,7 @@ export default function DailyChart(props) {
                 display: "inline-block",
               }}
             ></span>
-            {optimalDischargeLabel}
+            {dischargeLabel}
           </span>
         </div>
       )}

@@ -2,39 +2,15 @@
   display: flex;
   flex-direction: row;
   padding: 20px;
+  gap: var(--sidebar-gap);
 }
 
 .historic-sidebar {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 2rem;
-  position: relative;
-  flex: 0 0 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.historic-sidebar::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, var(--secondary), var(--primary));
-  border-radius: 18px;
-  z-index: -1;
-  opacity: 0.3;
-  filter: blur(4px);
+  gap: var(--sidebar-gap);
 }
 
 .historic-controls {
-  padding: 1.5rem;
-  margin-bottom: 15px;
-  text-align: left;
-  position: relative;
+  /* Inherits from .controls-section */
 }
 
 .historic-chart {
