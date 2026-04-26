@@ -1,0 +1,6 @@
+.chart-header-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+  width: 100%;
+}

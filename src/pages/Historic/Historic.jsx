@@ -54,7 +54,9 @@ const Historic = () => {
             <div className="battery-loader">
               <div className="battery-level"></div>
             </div>
-            <p className="loading-text">{t("historic.loading", "Loading...")}</p>
+            <p className="loading-text">
+              {t("historic.loading", "Loading...")}
+            </p>
           </div>
         ) : error ? (
           <p className="error">{error}</p>
@@ -70,6 +72,8 @@ const Historic = () => {
             dischargeLabel={t("historic.dischargeLabel")}
             optimalChargeLabel={t("historic.optimalChargeLabel")}
             optimalDischargeLabel={t("historic.optimalDischargeLabel")}
+            showRealLine={true}
+            showConfidenceBand={false}
           />
         )}
       </div>

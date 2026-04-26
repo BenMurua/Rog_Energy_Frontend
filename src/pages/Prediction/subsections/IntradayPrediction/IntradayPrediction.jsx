@@ -62,15 +62,16 @@ export default function IntradayPrediction() {
           <div className="chart-shell">
             <DailyChart
               data={data.price || []}
-              data2={data.realPrice || []}
+              data2={null}
               chargePeriod={[]}
               dischargePeriod={[]}
               data1Label={`Prediccion ${sessionId}`}
-              data2Label={`Real ${sessionId}`}
               chargeLabel="Carga"
               dischargeLabel="Descarga"
               optimalChargeLabel="Carga optima"
               optimalDischargeLabel="Descarga optima"
+              showRealLine={false}
+              showConfidenceBand={false}
             />
           </div>
 

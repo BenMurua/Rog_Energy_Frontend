@@ -4,6 +4,7 @@ import useMultipleEnergyData from "../../../../hooks/useMultipleEnergyData";
 import { useTranslation } from "react-i18next";
 import energyConfig from "../../../../config/energyQueries.json";
 import SelectSystemDuration from "../../../../components/SelectSystemDuration/SelectSystemDuration";
+import PredictionInfoSidebar from "./PredictionInfoSidebar";
 
 export default function DailyPrediction() {
   const today = new Date();
@@ -74,19 +75,11 @@ export default function DailyPrediction() {
   return (
     <div className="prediction-container">
       <div className="prediction-sidebar">
-        <div className="prediction-controls">
-          <SelectSystemDuration value={duration} onChange={setDuration} />
-          <p className="prediction-date-text">
-            {t("prediction.for_date", { date: predictionDate })}
-          </p>
-          <p className="optimal-charge-text">
-            {t("prediction.optimal_charge_timeframe")} {bestChargeTimeframe}
-          </p>
-          <p className="optimal-discharge-text">
-            {t("prediction.optimal_discharge_timeframe")}{" "}
-            {bestDischargeTimeframe}
-          </p>
-        </div>
+        <PredictionInfoSidebar
+          predictionDate={predictionDate}
+          bestChargeTimeframe={bestChargeTimeframe}
+          bestDischargeTimeframe={bestDischargeTimeframe}
+        />
       </div>
       <div className="prediction-chart">
         {isLoading ? (
@@ -103,15 +96,19 @@ export default function DailyPrediction() {
         ) : (
           <DailyChart
             data={data.price || []}
-            data2={data.realPrice || []}
+            data2={null}
             chargePeriod={data[`charge${duration}`] || []}
             dischargePeriod={data[`discharge${duration}`] || []}
             data1Label={t("prediction.predictedPrice")}
-            data2Label={t("prediction.realPrice")}
             chargeLabel={t("prediction.chargeLabel")}
             dischargeLabel={t("prediction.dischargeLabel")}
             optimalChargeLabel={t("prediction.optimalChargeLabel")}
             optimalDischargeLabel={t("prediction.optimalDischargeLabel")}
+            showRealLine={false}
+            showConfidenceBand={false}
+            controls={
+              <SelectSystemDuration value={duration} onChange={setDuration} />
+            }
           />
         )}
       </div>

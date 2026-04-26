@@ -1,0 +1,33 @@
+.prediction-info-sidebar {
+  padding: 1rem;
+  background-color: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.prediction-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.prediction-date-text {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.optimal-charge-text,
+.optimal-discharge-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.optimal-charge-text {
+  color: var(--price-up);
+}
+
+.optimal-discharge-text {
+  color: var(--price-down);
+}

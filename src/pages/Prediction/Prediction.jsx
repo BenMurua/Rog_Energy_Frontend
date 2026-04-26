@@ -27,11 +27,7 @@ const Prediction = () => {
 
   // Filtrar las queries para solo traer "price", "realPrice" y las de la duracion seleccionada
   const filteredQueries = energyConfig.queries.filter((q) => {
-    return (
-      q.key === "price" ||
-      q.key === "realPrice" ||
-      q.key.endsWith(duration)
-    );
+    return q.key === "price" || q.key.endsWith(duration);
   });
 
   // Un hook para llamar a la API
@@ -126,7 +122,9 @@ const Prediction = () => {
             <div className="battery-loader">
               <div className="battery-level"></div>
             </div>
-            <p className="loading-text">{t("prediction.loading", "Loading...")}</p>
+            <p className="loading-text">
+              {t("prediction.loading", "Loading...")}
+            </p>
           </div>
         ) : error ? (
           <p className="error">{error}</p>
