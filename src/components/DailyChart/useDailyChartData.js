@@ -219,35 +219,8 @@ export function useDailyChartData({
     const min = Math.min(...values);
     const max = Math.max(...values);
     const margin = Math.max((max - min) * 0.1, 5);
-    return [max, min]; // Reviso que antes era [min - margin, max + margin]
-  }, [chartData, showRealLine, resolvedExtraSeries]);
-
-    const yDomainWithMargin = React.useMemo(() => {
-    // Reutilizo lógica similar para consistencia con tu original
-    if (yDomain[0] === "auto") return yDomain;
-    // yDomain[0] es max, yDomain[1] es min en mi calculo anterior erróneo, lo corregiré
-    // El original era min, max. Corrigiendo:
-    const values = chartData
-      .flatMap((point) => {
-        const base = [
-          point.price,
-          showRealLine && Number.isFinite(point.price2) ? point.price2 : null,
-          point.predictedUpper,
-          point.predictedLower,
-        ];
-        resolvedExtraSeries.forEach((series) => {
-            base.push(Number.isFinite(point[series.key]) ? point[series.key] : null);
-        });
-        return base;
-      })
-      .filter((v) => Number.isFinite(v));
-    
-    if (!values.length) return ["auto", "auto"];
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const margin = Math.max((max - min) * 0.1, 5);
     return [min - margin, max + margin];
-  }, [chartData, showRealLine, resolvedExtraSeries, yDomain]); // yDomain no es realmente necesario aca
+  }, [chartData, showRealLine, resolvedExtraSeries]);
 
   const hasPredicted = React.useMemo(
     () => chartData.some((p) => Number.isFinite(p.price)),
@@ -283,7 +256,7 @@ export function useDailyChartData({
     hourlyTicks,
     getActionLabel,
     allThresholds,
-    yDomain: yDomainWithMargin,
+    yDomain,
     hasPredicted,
     hasReal,
     hasCharge,
