@@ -23,7 +23,11 @@ const Prediction = () => {
 
   const [duration, setDuration] = useState("4h");
   const { predictionVersion } = usePredictionVersion();
-  const priceTable = `${predictionVersion}_predicted_data`;
+  const versionPrefix =
+    predictionVersion === "V1"
+      ? predictionVersion
+      : predictionVersion.toLowerCase();
+  const priceTable = `${versionPrefix}_predicted_data`;
   const { t } = useTranslation();
 
   // Filtrar solo los datos necesarios: predicción y precio real

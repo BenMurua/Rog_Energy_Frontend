@@ -21,7 +21,11 @@ export default function DailyPrediction() {
 
   const [duration, setDuration] = useState("4h");
   const { predictionVersion } = usePredictionVersion();
-  const priceTable = `${predictionVersion}_predicted_data`;
+  const versionPrefix =
+    predictionVersion === "V1"
+      ? predictionVersion
+      : predictionVersion.toLowerCase();
+  const priceTable = `${versionPrefix}_predicted_data`;
   const { t } = useTranslation();
 
   const fecha_inicio = `${tomorrowStr} 00:00:00`;

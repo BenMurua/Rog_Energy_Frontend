@@ -19,9 +19,13 @@ const Historic = () => {
   const [duration, setDuration] = useState("4h"); // valor inicial
   const { t } = useTranslation();
   const { predictionVersion } = usePredictionVersion();
+  const versionPrefix =
+    predictionVersion === "V1"
+      ? predictionVersion
+      : predictionVersion.toLowerCase();
 
   // Construir tabla de precio según versión seleccionada
-  const priceTable = `${predictionVersion}_predicted_data`;
+  const priceTable = `${versionPrefix}_predicted_data`;
 
   // Modificar queries para usar la tabla correcta para precio
   const filteredQueries = energyConfig.queries.map((q) =>
