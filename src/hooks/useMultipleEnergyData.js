@@ -71,8 +71,16 @@ export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Crear una key estable para las dependencias
-  const queriesKey = JSON.stringify(queries.map(q => `${q.key}-${q.tabla}-${q.variable}`));
+  // Crear una key estable para las dependencias basada en propiedades específicas
+  // Esto asegura que el efecto se ejecute cuando ANY propiedad relevante cambia
+  const queriesKey = JSON.stringify(
+    queries.map(q => ({
+      key: q.key,
+      tabla: q.tabla,
+      variable: q.variable,
+      filterUniquePerDay: q.filterUniquePerDay
+    }))
+  );
 
   useEffect(() => {
     if (!fecha_inicio || !fecha_fin || queries.length === 0) {

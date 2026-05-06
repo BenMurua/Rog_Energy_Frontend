@@ -31,9 +31,22 @@ const Prediction = () => {
   const { t } = useTranslation();
 
   // Filtrar solo los datos necesarios: predicción y precio real
+  // Construir queries explícitamente para V3, V4, V5 para evitar problemas de cache
   const filteredQueries = energyConfig.queries
     .filter((q) => q.key === "price" || q.key === "realPrice")
-    .map((q) => (q.key === "price" ? { ...q, tabla: priceTable } : q));
+    .map((q) => {
+      if (q.key === "price") {
+        return {
+          key: q.key,
+          tabla: priceTable,
+          variable: q.variable,
+          ...(q.filterUniquePerDay && {
+            filterUniquePerDay: q.filterUniquePerDay,
+          }),
+        };
+      }
+      return q;
+    });
 
   const { data, isLoading, error } = useMultipleEnergyData(
     filteredQueries,

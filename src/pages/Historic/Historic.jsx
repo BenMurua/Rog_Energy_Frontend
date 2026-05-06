@@ -28,9 +28,19 @@ const Historic = () => {
   const priceTable = `${versionPrefix}_predicted_data`;
 
   // Modificar queries para usar la tabla correcta para precio
-  const filteredQueries = energyConfig.queries.map((q) =>
-    q.key === "price" ? { ...q, tabla: priceTable } : q,
-  );
+  const filteredQueries = energyConfig.queries.map((q) => {
+    if (q.key === "price") {
+      return {
+        key: q.key,
+        tabla: priceTable,
+        variable: q.variable,
+        ...(q.filterUniquePerDay && {
+          filterUniquePerDay: q.filterUniquePerDay,
+        }),
+      };
+    }
+    return q;
+  });
 
   // Un hook para llamar a la API
   const { data, isLoading, error } = useMultipleEnergyData(

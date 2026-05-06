@@ -33,7 +33,19 @@ export default function DailyPrediction() {
 
   const filteredQueries = energyConfig.queries
     .filter((q) => q.key === "price")
-    .map((q) => (q.key === "price" ? { ...q, tabla: priceTable } : q));
+    .map((q) => {
+      if (q.key === "price") {
+        return {
+          key: q.key,
+          tabla: priceTable,
+          variable: q.variable,
+          ...(q.filterUniquePerDay && {
+            filterUniquePerDay: q.filterUniquePerDay,
+          }),
+        };
+      }
+      return q;
+    });
 
   const { data, isLoading, error } = useMultipleEnergyData(
     filteredQueries,
