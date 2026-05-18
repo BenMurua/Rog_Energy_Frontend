@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 const formatApiDate = (date) => {
   const pad = (n) => String(n).padStart(2, "0");
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-    date.getDate()
+    date.getDate(),
   )} ${pad(date.getHours())}:${pad(date.getMinutes())}:00`;
 };
 
@@ -22,7 +22,8 @@ export default function DateSelector({ onChange, initialDate, maxDate }) {
   useEffect(() => {
     const start = new Date(day + "T00:00:00");
     const end = new Date(start.getTime());
-    end.setDate(end.getDate() + 1);
+    // Establecer la fecha de fin a las 23:45:00 del mismo día
+    end.setHours(23, 45, 0, 0);
 
     if (onChange) {
       onChange({
