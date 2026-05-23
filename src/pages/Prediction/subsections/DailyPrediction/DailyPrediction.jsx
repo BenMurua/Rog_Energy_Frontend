@@ -8,7 +8,7 @@ import { usePredictionVersion } from "../../../../context/PredictionVersionConte
 import PredictionInfoSidebar from "./PredictionInfoSidebar";
 import {
   buildPeriodSeries,
-  findBestWindow,
+  findChargeDischargeWindows,
   getWindowSizeFromDuration,
 } from "../../../../utils/predictionPeriods";
 
@@ -56,8 +56,10 @@ export default function DailyPrediction() {
   const priceSeries = data.price || [];
   const windowSize = getWindowSizeFromDuration(duration);
 
-  const chargeWindow = findBestWindow(priceSeries, windowSize, "min");
-  const dischargeWindow = findBestWindow(priceSeries, windowSize, "max");
+  const { chargeWindow, dischargeWindow } = findChargeDischargeWindows(
+    priceSeries,
+    windowSize,
+  );
 
   const chargePeriod = buildPeriodSeries(priceSeries, chargeWindow);
   const dischargePeriod = buildPeriodSeries(priceSeries, dischargeWindow);
