@@ -72,6 +72,21 @@ export default function DailyChart(props) {
     extraSeries,
   });
 
+  const resolvePeriodBounds = React.useCallback(
+    (period) => {
+      const startIndex = getIndex(period.start);
+      const endIndex = getIndex(period.end);
+
+      if (startIndex === -1 || endIndex === -1) return null;
+
+      const x1 = chartData[startIndex]?.hour ?? period.start;
+      const x2 = chartData[endIndex + 1]?.hour ?? chartData[endIndex]?.hour;
+
+      return x2 ? { x1, x2 } : null;
+    },
+    [chartData, getIndex],
+  );
+
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
   return (
@@ -216,14 +231,13 @@ export default function DailyChart(props) {
 
           {/* Franjas verdes para carga */}
           {chargePeriods.map((period, idx) => {
-            const x1 = getIndex(period.start);
-            const x2 = getIndex(period.end) + 1;
-            if (x1 === -1 || x2 === 0) return null;
+            const bounds = resolvePeriodBounds(period);
+            if (!bounds) return null;
             return (
               <ReferenceArea
                 key={`charge-${idx}`}
-                x1={x1}
-                x2={x2}
+                x1={bounds.x1}
+                x2={bounds.x2}
                 fill={palette.chargeFill}
                 label={
                   idx === 0
@@ -243,14 +257,13 @@ export default function DailyChart(props) {
           {/* Franjas rojas para descarga */}
           {dischargePeriods.map((period, idx) => {
             if (period.start === "00:00") return null;
-            const x1 = getIndex(period.start);
-            const x2 = getIndex(period.end) + 1;
-            if (x1 === -1 || x2 === 0) return null;
+            const bounds = resolvePeriodBounds(period);
+            if (!bounds) return null;
             return (
               <ReferenceArea
                 key={`discharge-${idx}`}
-                x1={x1}
-                x2={x2}
+                x1={bounds.x1}
+                x2={bounds.x2}
                 fill={palette.dischargeFill}
                 label={
                   idx === 0

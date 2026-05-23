@@ -7,6 +7,13 @@ import DateSelector from "../../components/DateSelector/DateSelector";
 import energyConfig from "../../config/energyQueries.json";
 import SelectSystemDuration from "../../components/SelectSystemDuration/SelectSystemDuration";
 import { usePredictionVersion } from "../../context/PredictionVersionContext";
+import {
+  buildPeriodSeries,
+  buildPointsSeries,
+  findBestChargeDischargePoints,
+  findOptimalNonOverlappingWindows,
+  getWindowSizeFromSeries,
+} from "../../utils/predictionPeriods";
 
 const Historic = () => {
   const today = new Date();
@@ -17,6 +24,7 @@ const Historic = () => {
     fecha_fin: `${todayStr} 23:45:00`,
   });
   const [duration, setDuration] = useState("4h"); // valor inicial
+  const [useHourly, setUseHourly] = useState(true);
   const { t } = useTranslation();
   const { predictionVersion } = usePredictionVersion();
   const versionPrefix =
@@ -26,6 +34,10 @@ const Historic = () => {
 
   // Construir tabla de precio según versión seleccionada
   const priceTable = `${versionPrefix}_predicted_data`;
+  const statsTable = `${versionPrefix}_data_stadistics`;
+
+  const isVersionedStatsKey = (key) =>
+    key.startsWith("charge") || key.startsWith("discharge");
 
   // Modificar queries para usar la tabla correcta para precio
   const filteredQueries = energyConfig.queries.map((q) => {
@@ -33,6 +45,16 @@ const Historic = () => {
       return {
         key: q.key,
         tabla: priceTable,
+        variable: q.variable,
+        ...(q.filterUniquePerDay && {
+          filterUniquePerDay: q.filterUniquePerDay,
+        }),
+      };
+    }
+    if (isVersionedStatsKey(q.key)) {
+      return {
+        key: q.key,
+        tabla: statsTable,
         variable: q.variable,
         ...(q.filterUniquePerDay && {
           filterUniquePerDay: q.filterUniquePerDay,
@@ -48,6 +70,42 @@ const Historic = () => {
     apiRange.fecha_inicio,
     apiRange.fecha_fin,
   );
+
+  const priceSeries = data.price || [];
+  const realPriceSeries = data.realPrice || [];
+  const pointCount = getWindowSizeFromSeries(duration, priceSeries);
+
+  const chargePeriod = useHourly
+    ? (() => {
+        const { chargeWindow } = findOptimalNonOverlappingWindows(
+          priceSeries,
+          pointCount,
+        );
+        return buildPeriodSeries(priceSeries, chargeWindow);
+      })()
+    : (() => {
+        const { chargePoints } = findBestChargeDischargePoints(
+          priceSeries,
+          pointCount,
+        );
+        return buildPointsSeries(priceSeries, chargePoints);
+      })();
+
+  const dischargePeriod = useHourly
+    ? (() => {
+        const { dischargeWindow } = findOptimalNonOverlappingWindows(
+          priceSeries,
+          pointCount,
+        );
+        return buildPeriodSeries(priceSeries, dischargeWindow);
+      })()
+    : (() => {
+        const { dischargePoints } = findBestChargeDischargePoints(
+          priceSeries,
+          pointCount,
+        );
+        return buildPointsSeries(priceSeries, dischargePoints);
+      })();
 
   const handleRangeChange = (range) => {
     if (
@@ -67,6 +125,15 @@ const Historic = () => {
             initialDate={apiRange.fecha_inicio.slice(0, 10)}
           />
           <SelectSystemDuration value={duration} onChange={setDuration} />
+          <button
+            type="button"
+            className="period-mode-toggle"
+            onClick={() => setUseHourly((prev) => !prev)}
+          >
+            {useHourly
+              ? t("prediction.chargeDischargeHourly")
+              : t("prediction.chargeDischarge15min")}
+          </button>
         </div>
       </div>
       <div className="historic-chart">
@@ -83,10 +150,10 @@ const Historic = () => {
           <p className="error">{error}</p>
         ) : (
           <DailyChart
-            data={data.price || []}
-            data2={data.realPrice || []}
-            chargePeriod={data[`charge${duration}`] || []}
-            dischargePeriod={data[`discharge${duration}`] || []}
+            data={priceSeries}
+            data2={realPriceSeries}
+            chargePeriod={chargePeriod}
+            dischargePeriod={dischargePeriod}
             data1Label={t("historic.predictedPrice")}
             data2Label={t("historic.realPrice")}
             chargeLabel={t("historic.chargeLabel")}

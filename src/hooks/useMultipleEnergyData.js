@@ -17,6 +17,16 @@ const fetchFromAPI = async (tabla, variable, fecha_inicio, fecha_fin) => {
   return response.json();
 };
 
+const normalizeNumber = (value) => {
+  if (typeof value === "number") return Number.isFinite(value) ? value : null;
+  if (typeof value === "string") {
+    const normalized = value.replace(/\s/g, "").replace(",", ".");
+    const parsed = Number.parseFloat(normalized);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+};
+
 // Función para mapear respuesta al formato del gráfico
 const mapToChartFormat = (items, variable) => {
   const pad = (n) => String(n).padStart(2, "0");
@@ -25,9 +35,9 @@ const mapToChartFormat = (items, variable) => {
     const hour = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
     const dateStr = dt.toLocaleDateString('es-ES');
     const rawValue = it[variable];
-    // Si es booleano, mantenerlo; si es número, conservar decimales
-    const price = typeof rawValue === "boolean" ? rawValue :
-                  rawValue != null ? Number(rawValue) : 0;
+    // Si es booleano, mantenerlo; si es número/str, normalizar
+    const price =
+      typeof rawValue === "boolean" ? rawValue : normalizeNumber(rawValue);
     return { hour, date: dateStr, price };
   });
 };

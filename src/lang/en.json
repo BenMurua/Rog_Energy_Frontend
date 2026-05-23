@@ -27,6 +27,10 @@
     "realPrice": "Real Price",
     "chargeLabel": "Charge",
     "dischargeLabel": "Discharge",
+    "chargeDischargeHourly": "Hourly charge/discharge",
+    "chargeDischarge15min": "15-min charge/discharge",
+    "avgChargePrice": "Avg charge price",
+    "avgDischargePrice": "Avg discharge price",
     "dataSourceLabel": "Predicted data version:",
     "not_available": "N/A",
     "for_date": "Prediction for {{date}}"

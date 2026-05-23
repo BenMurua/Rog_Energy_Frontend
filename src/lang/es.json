@@ -27,6 +27,10 @@
     "realPrice": "Precio Real",
     "chargeLabel": "Carga",
     "dischargeLabel": "Descarga",
+    "chargeDischargeHourly": "Carga/descarga horarias",
+    "chargeDischarge15min": "Carga/descarga 15 minutal",
+    "avgChargePrice": "Precio medio de carga",
+    "avgDischargePrice": "Precio medio de descarga",
     "dataSourceLabel": "Versión de datos predichos:",
     "not_available": "N/D",
     "for_date": "Predicción para {{date}}"

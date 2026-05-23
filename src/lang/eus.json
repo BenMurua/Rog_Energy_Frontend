@@ -27,6 +27,10 @@
     "realPrice": "Benetako Prezioa",
     "chargeLabel": "Karga",
     "dischargeLabel": "Deskarga",
+    "chargeDischargeHourly": "Ordubeteko karga/deskarga",
+    "chargeDischarge15min": "15 minutuko karga/deskarga",
+    "avgChargePrice": "Kargaren batez besteko prezioa",
+    "avgDischargePrice": "Deskargaren batez besteko prezioa",
     "dataSourceLabel": "Iragarritako datuen bertsioa:",
     "not_available": "E/E",
     "for_date": "Iragarpena {{date}}-(e)rako"

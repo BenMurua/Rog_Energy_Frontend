@@ -24,6 +24,54 @@
   letter-spacing: 0.5px;
 }
 
+.period-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface, var(--card));
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.period-mode-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.period-averages {
+  width: 100%;
+  min-width: 240px;
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.period-average-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text);
+  gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.period-average-row strong {
+  color: var(--secondary);
+}
+
 .prediction-chart {
   flex: 1;
 }

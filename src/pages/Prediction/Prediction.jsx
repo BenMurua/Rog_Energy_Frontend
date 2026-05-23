@@ -10,8 +10,10 @@ import SelectSystemDuration from "../../components/SelectSystemDuration/SelectSy
 import { usePredictionVersion } from "../../context/PredictionVersionContext";
 import {
   buildPeriodSeries,
-  findBestWindow,
-  getWindowSizeFromDuration,
+  buildPointsSeries,
+  findBestChargeDischargePoints,
+  findOptimalNonOverlappingWindows,
+  getWindowSizeFromSeries,
 } from "../../utils/predictionPeriods";
 
 const Prediction = () => {
@@ -22,6 +24,7 @@ const Prediction = () => {
   const predictionDate = tomorrow.toLocaleDateString();
 
   const [duration, setDuration] = useState("4h");
+  const [useHourly, setUseHourly] = useState(true);
   const { predictionVersion } = usePredictionVersion();
   const versionPrefix =
     predictionVersion === "V1"
@@ -56,22 +59,84 @@ const Prediction = () => {
 
   const priceSeries = data.price || [];
   const realPriceSeries = data.realPrice || [];
-  const windowSize = getWindowSizeFromDuration(duration);
+  const pointCount = getWindowSizeFromSeries(duration, priceSeries);
+  const averagePriceForPeriod = (series, periodSeries) => {
+    if (!Array.isArray(series) || !Array.isArray(periodSeries)) return null;
+    let sum = 0;
+    let count = 0;
+    series.forEach((item, index) => {
+      if (periodSeries[index]?.price !== 1) return;
+      const value = Number(item?.price);
+      if (!Number.isFinite(value)) return;
+      sum += value;
+      count += 1;
+    });
+    if (!count) return null;
+    return Number((sum / count).toFixed(2));
+  };
+  const chargePeriod = useHourly
+    ? (() => {
+        const { chargeWindow } = findOptimalNonOverlappingWindows(
+          priceSeries,
+          pointCount,
+        );
+        return buildPeriodSeries(priceSeries, chargeWindow);
+      })()
+    : (() => {
+        const { chargePoints } = findBestChargeDischargePoints(
+          priceSeries,
+          pointCount,
+        );
+        return buildPointsSeries(priceSeries, chargePoints);
+      })();
 
-  const chargeWindow = findBestWindow(priceSeries, windowSize, "min");
-  const dischargeWindow = findBestWindow(priceSeries, windowSize, "max");
+  const dischargePeriod = useHourly
+    ? (() => {
+        const { dischargeWindow } = findOptimalNonOverlappingWindows(
+          priceSeries,
+          pointCount,
+        );
+        return buildPeriodSeries(priceSeries, dischargeWindow);
+      })()
+    : (() => {
+        const { dischargePoints } = findBestChargeDischargePoints(
+          priceSeries,
+          pointCount,
+        );
+        return buildPointsSeries(priceSeries, dischargePoints);
+      })();
 
-  const chargePeriod = buildPeriodSeries(priceSeries, chargeWindow);
-  const dischargePeriod = buildPeriodSeries(priceSeries, dischargeWindow);
+  const chargeAverage = averagePriceForPeriod(priceSeries, chargePeriod);
+  const dischargeAverage = averagePriceForPeriod(priceSeries, dischargePeriod);
 
   return (
     <div className="prediction-container">
       <div className="sidebar-base prediction-sidebar">
         <div className="controls-section prediction-controls">
           <SelectSystemDuration value={duration} onChange={setDuration} />
-          <p className="prediction-date-text">
-            {t("prediction.for_date", { date: predictionDate })}
-          </p>
+          <button
+            type="button"
+            className="period-mode-toggle"
+            onClick={() => setUseHourly((prev) => !prev)}
+          >
+            {useHourly
+              ? t("prediction.chargeDischargeHourly")
+              : t("prediction.chargeDischarge15min")}
+          </button>
+          <div className="period-averages">
+            <div className="period-average-row">
+              <span>{t("prediction.avgChargePrice")}</span>
+              <strong>
+                {chargeAverage != null ? `${chargeAverage} €` : "—"}
+              </strong>
+            </div>
+            <div className="period-average-row">
+              <span>{t("prediction.avgDischargePrice")}</span>
+              <strong>
+                {dischargeAverage != null ? `${dischargeAverage} €` : "—"}
+              </strong>
+            </div>
+          </div>
         </div>
       </div>
       <div className="prediction-chart">
