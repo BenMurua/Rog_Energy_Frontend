@@ -16,35 +16,77 @@ export const getWindowSizeFromDuration = (duration) => {
   return (hours * 60) / SLOT_MINUTES;
 };
 
-export const findBestWindow = (series, windowSize, mode = "min") => {
+const getWindowStats = (series, windowSize) => {
   if (!Array.isArray(series) || series.length === 0 || windowSize <= 0) {
-    return null;
+    return [];
   }
 
-  let bestWindow = null;
+  const values = series.map((item) => Number(item?.price));
+  const windows = [];
+  let sum = 0;
+  let invalidCount = 0;
 
-  for (let start = 0; start <= series.length - windowSize; start += 1) {
-    const window = series.slice(start, start + windowSize);
-    const values = window.map((item) => Number(item?.price));
+  for (let idx = 0; idx < values.length; idx += 1) {
+    const value = values[idx];
 
-    if (values.some((value) => !Number.isFinite(value))) continue;
+    if (Number.isFinite(value)) {
+      sum += value;
+    } else {
+      invalidCount += 1;
+    }
 
-    const average = values.reduce((sum, value) => sum + value, 0) / windowSize;
+    if (idx >= windowSize) {
+      const outgoing = values[idx - windowSize];
+      if (Number.isFinite(outgoing)) {
+        sum -= outgoing;
+      } else {
+        invalidCount -= 1;
+      }
+    }
 
-    if (
-      !bestWindow ||
-      (mode === "min" && average < bestWindow.average) ||
-      (mode === "max" && average > bestWindow.average)
-    ) {
-      bestWindow = {
-        start,
-        end: start + windowSize - 1,
-        average,
-      };
+    if (idx >= windowSize - 1 && invalidCount === 0) {
+      windows.push({
+        start: idx - windowSize + 1,
+        end: idx,
+        average: sum / windowSize,
+      });
     }
   }
 
-  return bestWindow;
+  return windows;
+};
+
+const selectBestWindow = (windows, mode) =>
+  windows.reduce((best, current) => {
+    if (!best) return current;
+    if (mode === "min" && current.average < best.average) return current;
+    if (mode === "max" && current.average > best.average) return current;
+    return best;
+  }, null);
+
+const windowsOverlap = (windowA, windowB) => {
+  if (!windowA || !windowB) return false;
+  return windowA.start <= windowB.end && windowA.end >= windowB.start;
+};
+
+export const findBestWindow = (series, windowSize, mode = "min") => {
+  const windows = getWindowStats(series, windowSize);
+  return selectBestWindow(windows, mode);
+};
+
+export const findChargeDischargeWindows = (series, windowSize) => {
+  const windows = getWindowStats(series, windowSize);
+  if (!windows.length) {
+    return { chargeWindow: null, dischargeWindow: null };
+  }
+
+  const chargeWindow = selectBestWindow(windows, "min");
+  const dischargeCandidates = chargeWindow
+    ? windows.filter((window) => !windowsOverlap(window, chargeWindow))
+    : windows;
+  const dischargeWindow = selectBestWindow(dischargeCandidates, "max");
+
+  return { chargeWindow, dischargeWindow };
 };
 
 export const buildPeriodSeries = (series, window) => {

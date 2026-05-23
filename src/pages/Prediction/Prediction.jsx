@@ -10,7 +10,7 @@ import SelectSystemDuration from "../../components/SelectSystemDuration/SelectSy
 import { usePredictionVersion } from "../../context/PredictionVersionContext";
 import {
   buildPeriodSeries,
-  findBestWindow,
+  findChargeDischargeWindows,
   getWindowSizeFromDuration,
 } from "../../utils/predictionPeriods";
 
@@ -58,8 +58,10 @@ const Prediction = () => {
   const realPriceSeries = data.realPrice || [];
   const windowSize = getWindowSizeFromDuration(duration);
 
-  const chargeWindow = findBestWindow(priceSeries, windowSize, "min");
-  const dischargeWindow = findBestWindow(priceSeries, windowSize, "max");
+  const { chargeWindow, dischargeWindow } = findChargeDischargeWindows(
+    priceSeries,
+    windowSize,
+  );
 
   const chargePeriod = buildPeriodSeries(priceSeries, chargeWindow);
   const dischargePeriod = buildPeriodSeries(priceSeries, dischargeWindow);
