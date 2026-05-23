@@ -16,35 +16,152 @@ export const getWindowSizeFromDuration = (duration) => {
   return (hours * 60) / SLOT_MINUTES;
 };
 
-export const findBestWindow = (series, windowSize, mode = "min") => {
-  if (!Array.isArray(series) || series.length === 0 || windowSize <= 0) {
-    return null;
+const getNumericPrice = (item) => Number(item?.price);
+
+const buildWindowCandidates = (series, windowSize) => {
+  if (
+    !Array.isArray(series) ||
+    series.length === 0 ||
+    windowSize <= 0 ||
+    windowSize > series.length
+  ) {
+    return [];
   }
 
-  let bestWindow = null;
+  const windows = [];
+  let sum = 0;
+  let invalidValues = 0;
 
-  for (let start = 0; start <= series.length - windowSize; start += 1) {
-    const window = series.slice(start, start + windowSize);
-    const values = window.map((item) => Number(item?.price));
-
-    if (values.some((value) => !Number.isFinite(value))) continue;
-
-    const average = values.reduce((sum, value) => sum + value, 0) / windowSize;
-
-    if (
-      !bestWindow ||
-      (mode === "min" && average < bestWindow.average) ||
-      (mode === "max" && average > bestWindow.average)
-    ) {
-      bestWindow = {
-        start,
-        end: start + windowSize - 1,
-        average,
-      };
+  for (let index = 0; index < windowSize; index += 1) {
+    const value = getNumericPrice(series[index]);
+    if (Number.isFinite(value)) {
+      sum += value;
+    } else {
+      invalidValues += 1;
     }
   }
 
-  return bestWindow;
+  if (invalidValues === 0) {
+    windows.push({
+      start: 0,
+      end: windowSize - 1,
+      average: sum / windowSize,
+    });
+  }
+
+  for (let start = 1; start <= series.length - windowSize; start += 1) {
+    const outgoing = getNumericPrice(series[start - 1]);
+    const incoming = getNumericPrice(series[start + windowSize - 1]);
+
+    if (Number.isFinite(outgoing)) {
+      sum -= outgoing;
+    } else {
+      invalidValues -= 1;
+    }
+
+    if (Number.isFinite(incoming)) {
+      sum += incoming;
+    } else {
+      invalidValues += 1;
+    }
+
+    if (invalidValues === 0) {
+      windows.push({
+        start,
+        end: start + windowSize - 1,
+        average: sum / windowSize,
+      });
+    }
+  }
+
+  return windows;
+};
+
+const isBetterWindow = (candidate, current, mode) => {
+  if (!current) return true;
+  if (candidate.average === current.average) {
+    return candidate.start < current.start;
+  }
+  return mode === "min"
+    ? candidate.average < current.average
+    : candidate.average > current.average;
+};
+
+const windowsDoNotOverlap = (firstWindow, secondWindow) =>
+  firstWindow.end < secondWindow.start || secondWindow.end < firstWindow.start;
+
+const isBetterWindowPair = (candidatePair, currentPair) => {
+  if (!currentPair) return true;
+
+  if (candidatePair.chargeWindow.average !== currentPair.chargeWindow.average) {
+    return candidatePair.chargeWindow.average < currentPair.chargeWindow.average;
+  }
+
+  if (
+    candidatePair.dischargeWindow.average !== currentPair.dischargeWindow.average
+  ) {
+    return (
+      candidatePair.dischargeWindow.average >
+      currentPair.dischargeWindow.average
+    );
+  }
+
+  const candidateSpread =
+    candidatePair.dischargeWindow.average - candidatePair.chargeWindow.average;
+  const currentSpread =
+    currentPair.dischargeWindow.average - currentPair.chargeWindow.average;
+
+  if (candidateSpread !== currentSpread) {
+    return candidateSpread > currentSpread;
+  }
+
+  if (
+    candidatePair.chargeWindow.start !== currentPair.chargeWindow.start
+  ) {
+    return candidatePair.chargeWindow.start < currentPair.chargeWindow.start;
+  }
+
+  return (
+    candidatePair.dischargeWindow.start < currentPair.dischargeWindow.start
+  );
+};
+
+export const findBestWindow = (series, windowSize, mode = "min") =>
+  buildWindowCandidates(series, windowSize).reduce(
+    (bestWindow, candidate) =>
+      isBetterWindow(candidate, bestWindow, mode) ? candidate : bestWindow,
+    null,
+  );
+
+export const findBestWindowPair = (series, windowSize) => {
+  const windows = buildWindowCandidates(series, windowSize);
+
+  if (!windows.length) {
+    return {
+      chargeWindow: null,
+      dischargeWindow: null,
+    };
+  }
+
+  let bestPair = null;
+
+  windows.forEach((chargeWindow) => {
+    windows.forEach((dischargeWindow) => {
+      if (!windowsDoNotOverlap(chargeWindow, dischargeWindow)) return;
+
+      const candidatePair = { chargeWindow, dischargeWindow };
+      if (isBetterWindowPair(candidatePair, bestPair)) {
+        bestPair = candidatePair;
+      }
+    });
+  });
+
+  if (bestPair) return bestPair;
+
+  return {
+    chargeWindow: findBestWindow(series, windowSize, "min"),
+    dischargeWindow: null,
+  };
 };
 
 export const buildPeriodSeries = (series, window) => {
