@@ -114,27 +114,29 @@ const Prediction = () => {
       <div className="sidebar-base prediction-sidebar">
         <div className="controls-section prediction-controls">
           <SelectSystemDuration value={duration} onChange={setDuration} />
-          <button
-            type="button"
-            className="period-mode-toggle"
-            onClick={() => setUseHourly((prev) => !prev)}
-          >
-            {useHourly
-              ? t("prediction.chargeDischargeHourly")
-              : t("prediction.chargeDischarge15min")}
-          </button>
-          <div className="period-averages">
-            <div className="period-average-row">
-              <span>{t("prediction.avgChargePrice")}</span>
-              <strong>
-                {chargeAverage != null ? `${chargeAverage} €` : "—"}
-              </strong>
-            </div>
-            <div className="period-average-row">
-              <span>{t("prediction.avgDischargePrice")}</span>
-              <strong>
-                {dischargeAverage != null ? `${dischargeAverage} €` : "—"}
-              </strong>
+          <div className="period-panel">
+            <button
+              type="button"
+              className="period-mode-toggle"
+              onClick={() => setUseHourly((prev) => !prev)}
+            >
+              {useHourly
+                ? t("prediction.chargeDischargeHourly")
+                : t("prediction.chargeDischarge15min")}
+            </button>
+            <div className="period-averages">
+              <div className="period-average-row">
+                <span>{t("prediction.avgChargePrice")}</span>
+                <strong>
+                  {chargeAverage != null ? `${chargeAverage} €` : "—"}
+                </strong>
+              </div>
+              <div className="period-average-row">
+                <span>{t("prediction.avgDischargePrice")}</span>
+                <strong>
+                  {dischargeAverage != null ? `${dischargeAverage} €` : "—"}
+                </strong>
+              </div>
             </div>
           </div>
         </div>
