@@ -20,7 +20,7 @@ const StatisticsControl = ({
   const yesterdayStr = yesterday.toISOString().slice(0, 10);
   const maxDate = yesterdayStr;
 
-  const initialStartDateStr = "2025-12-18";
+  const initialStartDateStr = "2026-05-05";
 
   const [startDate, setStartDate] = useState(initialStartDateStr);
   const [endDate, setEndDate] = useState(yesterdayStr);

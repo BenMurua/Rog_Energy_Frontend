@@ -5,16 +5,31 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8001
 
 // Función para llamar a la API
 const fetchFromAPI = async (tabla, variable, fecha_inicio, fecha_fin) => {
+  const payload = { tabla, variable, fecha_inicio, fecha_fin };
+  console.debug("API request:", payload);
   const response = await fetch(`${API_BASE_URL}/query`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ tabla, variable, fecha_inicio, fecha_fin }),
+    body: JSON.stringify(payload),
   });
 
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
+  const text = await response.text();
+  let parsed;
+  try {
+    parsed = text ? JSON.parse(text) : null;
+  } catch (e) {
+    parsed = text;
   }
-  return response.json();
+
+  if (!response.ok) {
+    const err = new Error(`API Error: ${response.status}`);
+    err.status = response.status;
+    err.body = parsed;
+    console.warn("API response error:", { status: response.status, body: parsed, payload });
+    throw err;
+  }
+
+  return parsed;
 };
 
 const normalizeNumber = (value) => {
@@ -30,10 +45,19 @@ const normalizeNumber = (value) => {
 // Función para mapear respuesta al formato del gráfico
 const mapToChartFormat = (items, variable) => {
   const pad = (n) => String(n).padStart(2, "0");
-  return items.map((it) => {
-    const dt = new Date(it.datetime);
-    const hour = `${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
-    const dateStr = dt.toLocaleDateString('es-ES');
+  return items.map((it, index) => {
+    const rawDate =
+      it.datetime ?? it.date ?? it.day ?? it.fecha ?? it.timestamp ?? null;
+    const dt = rawDate ? new Date(rawDate) : null;
+    const isValidDate = dt instanceof Date && !Number.isNaN(dt.getTime());
+    const hour = isValidDate
+      ? `${pad(dt.getHours())}:${pad(dt.getMinutes())}`
+      : "00:00";
+    const dateStr = isValidDate
+      ? dt.toLocaleDateString("es-ES")
+      : typeof rawDate === "string"
+        ? rawDate
+        : String(index + 1);
     const rawValue = it[variable];
     // Si es booleano, mantenerlo; si es número/str, normalizar
     const price =
@@ -127,20 +151,52 @@ export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_
         // Ejecutar todas las queries en paralelo con Promise.allSettled
         // para que un error individual no rompa las demás
         const promises = queries.map(async (query) => {
-          const { key, tabla, variable } = query;
-          try {
-            const response = await fetchFromAPI(tabla, variable, fecha_inicio, fecha_fin);
-            const items = Array.isArray(response) ? response : response?.prices || [];
-            let mapped = raw ? items : mapToChartFormat(items, variable);
-            // Para estadísticas, filtrar a un valor por día
-            if (query.filterUniquePerDay) {
-              mapped = filterUniquePerDay(mapped);
+          const { key, tabla, variable, originalTabla } = query;
+          const tried = [];
+          const attemptFetch = async (candidateTabla) => {
+            tried.push(candidateTabla);
+            try {
+              const response = await fetchFromAPI(candidateTabla, variable, fecha_inicio, fecha_fin);
+              const items = Array.isArray(response) ? response : response?.prices || [];
+              let mapped = raw ? items : mapToChartFormat(items, variable);
+              if (query.filterUniquePerDay) mapped = filterUniquePerDay(mapped);
+              return { success: true, data: mapped, usedTabla: candidateTabla };
+            } catch (err) {
+              return { success: false, error: err, usedTabla: candidateTabla };
             }
-            return { key, data: mapped, success: true };
-          } catch (err) {
-            console.warn(`Error fetching ${key} (${variable}):`, err.message);
-            return { key, data: [], success: false, error: err.message };
+          };
+
+          // First try the provided tabla
+          let result = await attemptFetch(tabla);
+
+          // If got 400, try fallbacks: originalTabla (unversioned) and lowercased variants
+          if (!result.success && result.error && result.error.status === 400) {
+            const fallbacks = [];
+            if (originalTabla && originalTabla !== tabla) fallbacks.push(originalTabla);
+            // try lowercased version of tabla
+            if (typeof tabla === "string") fallbacks.push(tabla.toLowerCase());
+            if (originalTabla && typeof originalTabla === "string") fallbacks.push(originalTabla.toLowerCase());
+
+            for (const fb of fallbacks) {
+              if (!fb) continue;
+              const fbResult = await attemptFetch(fb);
+              if (fbResult.success) {
+                result = fbResult;
+                break;
+              }
+            }
           }
+
+          if (result.success) {
+            if (result.usedTabla && result.usedTabla !== tabla) {
+              console.info(`Query ${key} succeeded using fallback tabla: ${result.usedTabla}`);
+            }
+            return { key, data: result.data, success: true };
+          }
+
+          const errMsg = result.error ? `${result.error.message} (tried: ${tried.join(",")})` : "Unknown error";
+          console.warn(`Error fetching ${key} (${variable}):`, errMsg);
+          return { key, data: [], success: false, error: errMsg };
         });
 
         const results = await Promise.all(promises);
@@ -154,11 +210,18 @@ export default function useMultipleEnergyData(queries = [], fecha_inicio, fecha_
         // Verificar si hubo errores parciales
         const failures = results.filter(r => !r.success);
         if (failures.length > 0 && failures.length === results.length) {
-          // Todas fallaron
-          setError("Error al cargar datos de la API");
+          // Todas fallaron -> incluir detalles
+          const details = failures.map(f => ({ key: f.key, error: f.error }));
+          const msg = `Error al cargar datos de la API: ${JSON.stringify(details)}`;
+          setError(msg);
+          console.error(msg);
         } else if (failures.length > 0) {
           // Algunas fallaron, pero mostramos los datos que sí llegaron
-          console.warn(`${failures.length} de ${results.length} queries fallaron`);
+          console.warn(`${failures.length} de ${results.length} queries fallaron`, failures);
+          // No bloquear la UI por fallos parciales
+          setError(null);
+          // Guardar en cache los que sí tuvieron éxito
+          apiCache[cacheKey] = dataObj;
         } else {
           // Guardar en cache solo si todas tuvieron éxito
           apiCache[cacheKey] = dataObj;

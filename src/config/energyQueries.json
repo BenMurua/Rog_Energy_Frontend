@@ -1,109 +1,58 @@
 {
+  "statisticsPredictionTables": {
+    "V1": "v1_predicted_data",
+    "V2": "v2_predicted_data",
+    "V3": "v3_predicted_data",
+    "V4": "v4_predicted_data",
+    "V5": "v5_predicted_data"
+  },
   "queries": [
     {
       "key": "price",
-      "tabla": "V1_predicted_data",
+      "tabla": "v1_predicted_data",
       "variable": "predicted_omie_price_eur_mw"
-    },
-    {
-      "key": "charge1h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_1h_hourly"
-    },
-    {
-      "key": "discharge1h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_1h_hourly"
-    },
-    {
-      "key": "chargePrice1h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_price_1h_hourly"
-    },
-    {
-      "key": "dischargePrice1h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_price_1h_hourly"
-    },
-    {
-      "key": "charge2h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_2h_hourly"
-    },
-    {
-      "key": "discharge2h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_2h_hourly"
-    },
-    {
-      "key": "chargePrice2h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_price_2h_hourly"
-    },
-    {
-      "key": "dischargePrice2h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_price_2h_hourly"
-    },
-    {
-      "key": "charge4h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_4h_hourly"
-    },
-    {
-      "key": "discharge4h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_4h_hourly"
-    },
-    {
-      "key": "chargePrice4h",
-      "tabla": "V1_data_stadistics",
-      "variable": "charge_price_4h_hourly"
-    },
-    {
-      "key": "dischargePrice4h",
-      "tabla": "V1_data_stadistics",
-      "variable": "discharge_price_4h_hourly"
     },
     {
       "key": "realPrice",
       "tabla": "market_data",
       "variable": "omie_price_1_eur_mwh"
-    },
+    }
+  ],
+  "statisticsQueries": [
     {
-      "key": "prediction_delta1h",
-      "tabla": "V1_data_stadistics",
-      "variable": "real_delta_price_1h_hourly",
+      "key": "prediction_spread1h",
+      "tabla": "predicted_data",
+      "variable": "real_spread_1h",
       "filterUniquePerDay": true
     },
     {
-      "key": "prediction_delta2h",
-      "tabla": "V1_data_stadistics",
-      "variable": "real_delta_price_2h_hourly",
+      "key": "prediction_spread2h",
+      "tabla": "predicted_data",
+      "variable": "real_spread_2h",
       "filterUniquePerDay": true
     },
     {
-      "key": "prediction_delta4h",
-      "tabla": "V1_data_stadistics",
-      "variable": "real_delta_price_4h_hourly",
+      "key": "prediction_spread4h",
+      "tabla": "predicted_data",
+      "variable": "real_spread_4h",
       "filterUniquePerDay": true
     },
     {
-      "key": "ideal_delta1h",
+      "key": "ideal_return1h",
       "tabla": "real_data_stadistics",
-      "variable": "delta_price_1h_hourly",
+      "variable": "delta_price_1h",
       "filterUniquePerDay": true
     },
     {
-      "key": "ideal_delta2h",
+      "key": "ideal_return2h",
       "tabla": "real_data_stadistics",
-      "variable": "delta_price_2h_hourly",
+      "variable": "delta_price_2h",
       "filterUniquePerDay": true
     },
     {
-      "key": "ideal_delta4h",
+      "key": "ideal_return4h",
       "tabla": "real_data_stadistics",
-      "variable": "delta_price_4h_hourly",
+      "variable": "delta_price_4h",
       "filterUniquePerDay": true
     }
   ]

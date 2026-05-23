@@ -24,10 +24,7 @@ export default function DailyPrediction() {
   const [duration, setDuration] = useState("4h");
   const [useHourly, setUseHourly] = useState(true);
   const { predictionVersion } = usePredictionVersion();
-  const versionPrefix =
-    predictionVersion === "V1"
-      ? predictionVersion
-      : predictionVersion.toLowerCase();
+  const versionPrefix = predictionVersion;
   const priceTable = `${versionPrefix}_predicted_data`;
   const { t } = useTranslation();
 

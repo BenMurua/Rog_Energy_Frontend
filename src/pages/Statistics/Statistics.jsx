@@ -4,6 +4,7 @@ import "./Statistics.css";
 import StatisticsChart from "../../components/StatisticsChart/StatisticsChart";
 import useMultipleEnergyData from "../../hooks/useMultipleEnergyData";
 import { useTranslation } from "react-i18next";
+import { usePredictionVersion } from "../../context/PredictionVersionContext";
 import energyConfig from "../../config/energyQueries.json";
 
 const Statistics = () => {
@@ -13,53 +14,75 @@ const Statistics = () => {
   yesterday.setDate(today.getDate() - 1);
   const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
-  const initialStartDate = "2025-12-18";
+  const initialStartDate = "2026-05-05";
 
   const [dateRange, setDateRange] = useState({
     fecha_inicio: `${initialStartDate} 00:00:00`,
     fecha_fin: `${yesterdayStr} 00:00:00`,
   });
   const [selected, setSelected] = useState([false, false, true]);
+  const { predictionVersion } = usePredictionVersion();
+  const configuredPredictionTable =
+    energyConfig.statisticsPredictionTables?.[predictionVersion];
+  const fallbackPredictionTable =
+    predictionVersion === "V1"
+      ? "v1_predicted_data"
+      : `${predictionVersion.toLowerCase()}_predicted_data`;
+  const predictionTable = configuredPredictionTable || fallbackPredictionTable;
+  const statsTable = "real_data_stadistics";
+  const statisticsQueries = (energyConfig.statisticsQueries || []).map(
+    (query) => ({
+      key: query.key,
+      tabla:
+        query.tabla === "predicted_data"
+          ? predictionTable
+          : query.tabla === "real_data_stadistics"
+            ? statsTable
+            : query.tabla,
+      variable: query.variable,
+      ...(query.filterUniquePerDay && {
+        filterUniquePerDay: query.filterUniquePerDay,
+      }),
+    }),
+  );
 
   // Usar el hook para obtener datos
   const { data, isLoading, error } = useMultipleEnergyData(
-    energyConfig.queries,
+    statisticsQueries,
     dateRange.fecha_inicio,
-    dateRange.fecha_fin
+    dateRange.fecha_fin,
   );
 
-  const handleDateRangeChange = useCallback(
-    (newDateRange) => {
-      const newInicio = `${newDateRange.start} 00:00:00`;
-      const newFin = `${newDateRange.end} 00:00:00`;
-      
-      setDateRange((prev) => {
-        if (prev.fecha_inicio === newInicio && prev.fecha_fin === newFin) return prev;
-        return { fecha_inicio: newInicio, fecha_fin: newFin };
-      });
-    },
-    []
-  );
+  const handleDateRangeChange = useCallback((newDateRange) => {
+    const newInicio = `${newDateRange.start} 00:00:00`;
+    const newFin = `${newDateRange.end} 00:00:00`;
+
+    setDateRange((prev) => {
+      if (prev.fecha_inicio === newInicio && prev.fecha_fin === newFin)
+        return prev;
+      return { fecha_inicio: newInicio, fecha_fin: newFin };
+    });
+  }, []);
 
   const handleSelectionChange = useCallback((newSelected) => {
     setSelected(newSelected);
   }, []);
 
   const delta = selected[0]
-    ? data.prediction_delta1h
+    ? data.prediction_spread1h
     : selected[1]
-    ? data.prediction_delta2h
-    : selected[2]
-    ? data.prediction_delta4h
-    : null;
+      ? data.prediction_spread2h
+      : selected[2]
+        ? data.prediction_spread4h
+        : null;
 
   const data1 = selected[0]
-    ? data.ideal_delta1h
+    ? data.ideal_return1h
     : selected[1]
-    ? data.ideal_delta2h
-    : selected[2]
-    ? data.ideal_delta4h
-    : null;
+      ? data.ideal_return2h
+      : selected[2]
+        ? data.ideal_return4h
+        : null;
 
   const validData1 = data1 ? data1.filter((item) => item.price !== 0) : [];
   const idealAvg =
@@ -96,10 +119,15 @@ const Statistics = () => {
           <div className="battery-loader">
             <div className="battery-level"></div>
           </div>
-          <p className="loading-text">{t("prediction.loading", "Loading...")}</p>
+          <p className="loading-text">
+            {t("prediction.loading", "Loading...")}
+          </p>
         </div>
       ) : error ? (
-        <p>Error: {error}</p>
+        <div className="error-block">
+          <h3>Error cargando datos</h3>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{String(error)}</pre>
+        </div>
       ) : (
         <StatisticsChart data={data1 || []} data2={delta} />
       )}
